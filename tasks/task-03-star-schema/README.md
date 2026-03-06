@@ -1,12 +1,10 @@
 # Task 05 – Star Schema Design
 
-**Difficulty:** Medium ⭐️⭐️
-**Files used:**
-- `orders.csv`
-- `order_items.csv`
-- `products.csv`
-- `users.csv`
-- `locations.csv`
+**Difficulty**: Medium ⭐️⭐️
+
+**Data source**: data/ecommerce
+
+**Theory**: [Dimensional Modeling: Facts, Dimensions, and the Star Schema](THEORY.md)
 
 ---
 

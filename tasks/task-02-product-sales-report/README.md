@@ -1,10 +1,10 @@
 # Task 02 – Product Sales Report
 
-**Difficulty:** Easy ⭐️
-**Files used:**
-- `products.csv`
-- `order_items.csv`
-- `orders.csv`
+**Difficulty**: Easy ⭐️
+
+**Data source**: data/ecommerce
+
+**Theory**: [Grain Choices, Aggregation Patterns, and Join Safety](THEORY.md)
 
 ---
 
@@ -17,6 +17,11 @@ The merchandising team needs to understand how each product is selling. They wan
 ## Goal
 
 Build a **product-level sales report** with one row per product. All sales metrics should reflect only non-cancelled orders.
+
+**Files used:**
+- `data/ecommerce/products.csv`
+- `data/ecommerce/order_items.csv`
+- `data/ecommerce/orders.csv`
 
 ---
 

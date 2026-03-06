@@ -1,11 +1,10 @@
 # Task 06 – Sessionization & Cart Abandonment Analysis
 
-**Difficulty:** Hard ⭐️⭐️⭐️
-**Files used:**
-- `user_events.csv`
-- `products.csv`
-- `orders.csv`
-- `users.csv`
+**Difficulty**: Hard ⭐️⭐️⭐️
+
+**Data source**: data/ecommerce
+
+**Theory**: [Sessionization, Window Functions, and Anti-Join Patterns](THEORY.md)
 
 ---
 

@@ -1,10 +1,10 @@
 # Task 04 – User Conversion Funnel
 
-**Difficulty:** Hard ⭐️⭐️⭐️
-**Files used:**
-- `user_events.csv`
-- `orders.csv`
-- `users.csv`
+**Difficulty**: Hard ⭐️⭐️⭐️
+
+**Data source**: data/ecommerce
+
+**Theory**: [Event-Driven Modeling, Funnels, and Cohort Analysis](THEORY.md)
 
 ---
 

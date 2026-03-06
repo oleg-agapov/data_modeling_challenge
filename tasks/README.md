@@ -4,20 +4,14 @@ Six exercises progressing from foundational entity modeling to advanced dimensio
 
 | # | Task | Difficulty | Type | Files used |
 |---|---|---|---|---|
-| 01 | [Revenue Reporting](task-01-revenue-reporting/) | ⭐️ Easy | Entity / Fact table | `orders`, `order_items`, `users` |
-| 02 | [Product Sales Report](task-02-product-sales-report/) | ⭐️ Easy | Join + Aggregation | `products`, `order_items`, `orders` |
-| 03 | [Star Schema Design](task-03-star-schema/) | ⭐️⭐️ Medium | Dimensional Modeling | `orders`, `order_items`, `products`, `users`, `locations` |
-| 04 | [Hotel Booking Data Marts](task-04-hotel-booking-marts/) | ⭐️⭐️ Medium | Theoretical / Design-only | none |
-| 05 | [User Conversion Funnel](task-05-conversion-funnel/) | ⭐️⭐️⭐️ Hard | Window Functions + Funnel | `user_events`, `orders`, `users` |
-| 06 | [Sessionization & Cart Abandonment](task-06-sessionization/) | ⭐️⭐️⭐️ Hard | Advanced Window Functions | `user_events`, `products`, `orders`, `users` |
+| 01 | [Revenue Reporting](task-01-revenue-reporting/) | ⭐️ | Entity / Fact table | `orders`, `order_items`, `users` |
+| 02 | [Product Sales Report](task-02-product-sales-report/) | ⭐️ | Join + Aggregation | `products`, `order_items`, `orders` |
+| 03 | [Star Schema Design](task-03-star-schema/) | ⭐️⭐️ | Dimensional Modeling | `orders`, `order_items`, `products`, `users`, `locations` |
+| 04 | [Hotel Booking Data Marts](task-04-hotel-booking-marts/) | ⭐️⭐️ | Theoretical / Design-only | none |
+| 05 | [User Conversion Funnel](task-05-conversion-funnel/) | ⭐️⭐️⭐️ | Window Functions + Funnel | `user_events`, `orders`, `users` |
+| 06 | [Sessionization & Cart Abandonment](task-06-sessionization/) | ⭐️⭐️⭐️ | Advanced Window Functions | `user_events`, `products`, `orders`, `users` |
 
 ## Progression
-
-```
-Easy   → Tasks 01–02  Entity-grain fact building, multi-table joins, aggregation
-Medium → Tasks 03–04  Star schema design (SQL), conceptual/logical modeling (no code)
-Hard   → Tasks 05–06  Funnel analysis with window functions, sessionization, anti-joins
-```
 
 Each task folder contains a `README.md` with:
 - **Context** – the business problem and stakeholder need

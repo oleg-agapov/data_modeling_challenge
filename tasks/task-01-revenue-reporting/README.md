@@ -1,10 +1,10 @@
 # Task 01 – Revenue Reporting
 
-**Difficulty:** Easy ⭐️
-**Files used:**
-- `orders.csv`
-- `order_items.csv`
-- `users.csv`
+**Difficulty**: Easy ⭐️
+
+**Data source**: data/ecommerce
+
+**Theory**: [The Three Layers of Data Modeling](THEORY.md)
 
 ---
 
@@ -23,6 +23,12 @@ Build an **order-level fact table** with one row per `order_id`. The model must 
 - **Average order value (AOV)** — mean revenue per order
 - **ARPU** (Average Revenue Per User) — total revenue divided by the number of distinct users
 - **Status split** — distribution of orders and revenue across `pending`, `shipped`, `delivered`, and `cancelled`
+
+In this exercise you should use the **following files**:
+
+- `data/ecommerce/orders.csv`
+- `data/ecommerce/order_items.csv`
+- `data/ecommerce/users.csv`
 
 ---
 

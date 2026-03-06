@@ -1,7 +1,10 @@
 # Task 07 – Hotel Booking Data Marts (Conceptual & Logical Design)
 
-**Difficulty:** Medium ⭐️⭐️
-**Files used:** none — this is a design-only exercise, no code required
+**Difficulty**: Medium ⭐️⭐️
+
+**Data source**: data/ecommerce
+
+**Theory**: [Slowly Changing Dimensions, Data Marts, and Design-First Thinking](THEORY.md)
 
 ---
 
