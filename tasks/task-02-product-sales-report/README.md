@@ -6,30 +6,25 @@
 
 **Theory**: [Grain Choices, Aggregation Patterns, and Join Safety](THEORY.md)
 
----
-
 ## Context
 
 The merchandising team needs to understand how each product is selling. They want to compare actual transaction prices against the catalog price, understand discount exposure, and see current stock levels alongside sales velocity — all in a single product-level view.
-
----
 
 ## Goal
 
 Build a **product-level sales report** with one row per product. All sales metrics should reflect only non-cancelled orders.
 
-**Files used:**
+In this exercise you should use the **following files**:
+
 - `data/ecommerce/products.csv`
 - `data/ecommerce/order_items.csv`
 - `data/ecommerce/orders.csv`
 
----
+## Deliverables
 
-## Stretch goal
-
-Add a `sell_through_rate` column defined as `units_sold / NULLIF(products.stock + units_sold, 0)` — a rough estimate of how much of the available supply has been sold. Discuss any assumptions this metric requires.
-
----
+1. `1-conceptual-layer.png`: a conceptual layer diagram. Use [excalidraw](https://excalidraw.com/) or a similar app.
+1. `2-logical-layer.png`: draw the logical layer in [DrawDB](https://www.drawdb.app).
+1. `3-physical-layer.sql`: a script with data models (SELECT-only). Use [PondPilot](pondpilot.io) to upload the source data and create SQL.
 
 ## Hints
 
@@ -70,5 +65,16 @@ Hint 2. Additional guidance
 - **Exclude cancelled orders** (`orders.status = 'cancelled'`) from all sales metrics.
 - Include **all products** in the output, even those with zero sales — use a `LEFT JOIN` from `products` into the sales aggregation.
 - For products with no sales, numeric metric columns should be `0` (use `COALESCE`); `avg_selling_price` and `price_diff` should be `NULL`.
+
+</details>
+
+
+<details>
+<summary>
+Hint 3. Stretch goal
+</summary>
+
+- Add a `sell_through_rate` column defined as `units_sold / NULLIF(products.stock + units_sold, 0)`.
+- Discuss assumptions required for this estimate (for example, static stock snapshot vs. historical inventory movement).
 
 </details>

@@ -2,9 +2,9 @@
 
 Data modeling is the process of defining how data is structured, stored, and related. Every good model passes through three distinct layers before it reaches the database. Understanding where you are in this progression prevents a very common mistake: jumping straight to implementation before the business meaning is clear.
 
----
 
 ## The Three Layers
+
 
 ### 1. Conceptual Model
 
@@ -23,6 +23,7 @@ Key artifacts of a conceptual model:
 - Relationship verbs (places, contains, belongs to)
 - Cardinality notation (one User places many Orders; each Order belongs to one User)
 
+
 ### 2. Logical Model
 
 The logical model answers: **what information do we need to capture about each entity?**
@@ -35,13 +36,13 @@ Now you move into attributes — the columns — but still without worrying abou
 
 A logical model for this task would show the `orders` table with its columns, `order_items` with its columns, and a line between them on `order_id`.
 
+
 ### 3. Physical Model
 
 The physical model answers: **how is this actually stored in the database?**
 
 This translates the logical design into real DDL: exact data types (`NUMERIC(12,2)` vs `FLOAT`), indexes, partitioning keys, `NOT NULL` constraints, and storage engines. The choices here affect query performance and storage cost, not just correctness.
 
----
 
 ## The Most Important Concept: Grain
 
@@ -54,7 +55,6 @@ Every analytical table must have a declared grain. This task's output has the gr
 
 **Fan-out** is what happens when you violate grain accidentally. If you join `orders` (1,000 rows) to `order_items` (3,000 rows) without pre-aggregating, your result will have 3,000 rows — three times too many. Every `SUM` you run will be tripled. The fix is always the same: **aggregate to the target grain before joining**.
 
----
 
 ## Moving from Source to Analytical Model
 
@@ -67,7 +67,6 @@ Operational (OLTP) systems are optimized for writing data quickly and consistent
 
 This task walks you through exactly that pattern: aggregate `order_items` to order grain → join to `orders` → produce a clean, self-contained fact table.
 
----
 
 ## Summary
 

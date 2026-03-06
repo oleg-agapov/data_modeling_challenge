@@ -1,4 +1,4 @@
-# Task 05 – Star Schema Design
+# Task 03 – Star Schema Design
 
 **Difficulty**: Medium ⭐️⭐️
 
@@ -6,21 +6,27 @@
 
 **Theory**: [Dimensional Modeling: Facts, Dimensions, and the Star Schema](THEORY.md)
 
----
-
 ## Context
 
 The BI team is migrating the e-commerce data into an analytics warehouse. The raw operational tables need to be restructured into a **star schema** so that downstream reporting tools can query it efficiently without re-joining every table from scratch.
-
----
 
 ## Goal
 
 Design and populate a **star schema** centred on order line items (the most granular transactional grain), with four dimension tables.
 
----
 
-## Target schema
+## Deliverables
+
+1. `1-conceptual-layer.png`: a conceptual star schema diagram. Use [excalidraw](https://excalidraw.com/) or a similar app.
+1. `2-logical-layer.png`: draw dimensions and fact table with keys and relationships in [DrawDB](https://www.drawdb.app).
+1. `3-physical-layer.sql`: a script with all dimensional and fact models plus validation queries (SELECT-only). Use [PondPilot](pondpilot.io) to upload the source data and create SQL.
+
+## Hints
+
+<details>
+<summary>
+Hint 1. Target schema
+</summary>
 
 ```
                    ┌─────────────┐
@@ -36,9 +42,14 @@ Design and populate a **star schema** centred on order line items (the most gran
                    └─────────────┘
 ```
 
----
 
-## Dimension table specifications
+</details>
+
+
+<details>
+<summary>
+Hint 2. Dimension table specifications
+</summary>
 
 ### `dim_date`
 One row per calendar date covering the full range of `orders.date_ordered`.
@@ -91,9 +102,16 @@ One row per user; treat as a **Type 1 SCD** (overwrite on change, no history).
 | `zip_code` | |
 | `country_code` | `code` |
 
----
 
-## Fact table specification: `fact_order_items`
+</details>
+
+
+<details>
+<summary>
+Hint 3. Fact table specification
+</summary>
+
+### `fact_order_items`
 
 Grain: one row per order line item.
 
@@ -113,18 +131,19 @@ Grain: one row per order line item.
 | `discount` | numeric(12,2) | |
 | `line_total` | numeric(12,2) | |
 
----
 
-## Requirements
+</details>
+
+
+<details>
+<summary>
+Hint 4. Requirements and validation
+</summary>
 
 1. Generate integer surrogate keys using `ROW_NUMBER() OVER ()` or equivalent — do **not** reuse the source UUIDs as dimension PKs.
 2. All dimension lookups in the fact table must use surrogate keys, not natural keys.
 3. Every foreign key in `fact_order_items` must resolve — no orphan keys (validate with anti-join checks).
 4. Monetary columns must be typed as `NUMERIC(12,2)`.
-
----
-
-## Validation queries
 
 After building the schema, write queries to verify:
 
@@ -132,8 +151,15 @@ After building the schema, write queries to verify:
 2. `SUM(fact_order_items.line_total)` matches `SUM(order_items.line_total)` from the source.
 3. No `NULL` foreign keys exist in any FK column of `fact_order_items`.
 
----
 
-## Stretch goal
+</details>
+
+
+<details>
+<summary>
+Hint 5. Stretch goal
+</summary>
 
 Promote `dim_customer` to a **Type 2 SCD**: add `valid_from`, `valid_to`, and `is_current` columns, and simulate a single fictitious change to five users' email addresses to demonstrate the versioning logic.
+
+</details>

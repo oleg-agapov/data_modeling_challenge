@@ -6,13 +6,11 @@
 
 **Theory**: [The Three Layers of Data Modeling](THEORY.md)
 
----
 
 ## Context
 
 The finance team needs a reliable, order-grained foundation for revenue reporting. Rather than a pre-aggregated summary, they want a model where each row represents one order — enriched with revenue and item metrics — so that any downstream aggregation (daily, monthly, by status, by user, etc.) can be computed on top of it.
 
----
 
 ## Goal
 
@@ -30,7 +28,11 @@ In this exercise you should use the **following files**:
 - `data/ecommerce/order_items.csv`
 - `data/ecommerce/users.csv`
 
----
+## Deliverables
+
+1. `1-conceptual-layer.png`: a conceptual layer diagram. Use [excalidraw](https://excalidraw.com/) or a similar app.
+1. `2-logical-layer.png`: draw the logical layer in [DrawDB](https://www.drawdb.app).
+1. `3-physical-layer.sql`: a script with data models (SELECT-only). Use [PondPilot](pondpilot.io) to upload the source data and create SQL.
 
 ## Hints
 

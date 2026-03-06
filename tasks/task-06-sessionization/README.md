@@ -6,13 +6,9 @@
 
 **Theory**: [Sessionization, Window Functions, and Anti-Join Patterns](THEORY.md)
 
----
-
 ## Context
 
 Raw clickstream events are stored one row at a time. To reason about user behaviour at the *visit* level, events must first be **sessionized** — grouped into discrete browsing sessions separated by a 30-minute inactivity gap. Once sessions exist, you can identify **cart abandonment**: users who added a product to their cart during a session but never placed an order for it.
-
----
 
 ## Goal
 
@@ -22,9 +18,19 @@ Build three layered artefacts on top of `user_events`:
 2. A **session table** (one row per session)
 3. A **cart abandonment report** (one row per user/product pair that was carted but not purchased)
 
----
 
-## Part A – Enriched events (denormalization)
+## Deliverables
+
+1. `1-conceptual-layer.png`: a conceptual layer diagram of events, sessions, and purchase linkage. Use [excalidraw](https://excalidraw.com/) or a similar app.
+1. `2-logical-layer.png`: draw the logical layer in [DrawDB](https://www.drawdb.app).
+1. `3-physical-layer.sql`: a script with SQL models for Parts A, B, and C (SELECT-only). Use [PondPilot](pondpilot.io) to upload source data and create SQL.
+
+## Hints
+
+<details>
+<summary>
+Hint 1. Part A – Enriched events (denormalization)
+</summary>
 
 Produce a flat table `enriched_events` with one row per event, combining event data with user and product attributes.
 
@@ -44,9 +50,13 @@ Produce a flat table `enriched_events` with one row per event, combining event d
 
 Use `LEFT JOIN` for both `users` and `products` so that events with no associated product are preserved.
 
----
+</details>
 
-## Part B – Sessionization
+
+<details>
+<summary>
+Hint 2. Part B – Sessionization
+</summary>
 
 Using a **30-minute inactivity gap** rule, assign a session identifier to every event.
 
@@ -73,9 +83,13 @@ A new session starts when the gap between the current event and the previous eve
 | `add_to_cart_count` | Events with `event_type = 'add_to_cart'` |
 | `distinct_products_viewed` | Distinct non-null `product_id` values seen in the session |
 
----
+</details>
 
-## Part C – Cart abandonment report
+
+<details>
+<summary>
+Hint 3. Part C – Cart abandonment report
+</summary>
 
 Identify **user × product pairs** where the user added the product to their cart but **never placed a completed order** for it.
 
@@ -99,24 +113,24 @@ Definition:
 
 Sort by `cart_count` descending, then `last_carted_at` descending.
 
----
+</details>
 
-## Requirements
+
+<details>
+<summary>
+Hint 4. Requirements, additional guidance, and stretch goal
+</summary>
 
 1. All three parts must be expressed as **CTEs or views** — do not use temporary tables stored outside the query.
 2. The sessionization logic in Part B must not rely on hard-coded session IDs.
 3. Part C must use either a `LEFT JOIN … WHERE … IS NULL` anti-join or a `NOT EXISTS` subquery — **not** `NOT IN` (due to NULL-safety concerns).
 
----
-
-## Hints
-
 - Sessionization is easier to reason about when done in two CTEs: one that computes the lag gap and session-start flag, and a second that computes the running sum.
 - For Part C, you need to join `orders` to `order_items` first to get the `(user_id, product_id)` pairs that were actually purchased.
 - The `add_to_cart` events have `product_id` populated; verify this with a quick count before building the anti-join.
 
----
-
-## Stretch goal
+Stretch goal:
 
 Compute a **session-level conversion flag**: for each session, determine whether the user placed at least one order within 24 hours of the session ending. Add this as an `is_converted_session` boolean column to the `sessions` table.
+
+</details>
