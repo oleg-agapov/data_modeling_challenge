@@ -1,5 +1,7 @@
 # Task 01 – Revenue Reporting
 
+![Image](image.png)
+
 **Difficulty**: Easy ⭐️
 
 **Data source**: data/ecommerce
