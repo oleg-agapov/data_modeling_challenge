@@ -1,10 +1,9 @@
-# Data Modeling Challenge
+![Data Modeling whiteboard](cover.png)
 
 Practice end-to-end data modeling using realistic datasets.
 
 This repository is a self-contained challenge: it includes source data, task prompts, and a place to document your approach and final solution.
 
-![Data Modeling whiteboard](cover.png)
 
 ## What this challenge covers
 
