@@ -1,8 +1,8 @@
 # Task 04 – Hotel Booking Data Marts (Conceptual & Logical Design)
 
-**Difficulty**: Medium ⭐️⭐️
+![Image](image.png)
 
-**Data source**: data/ecommerce
+**Difficulty**: Medium ⭐️⭐️
 
 **Theory**: [Slowly Changing Dimensions, Data Marts, and Design-First Thinking](THEORY.md)
 
