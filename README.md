@@ -14,15 +14,37 @@ This repository is a self-contained challenge: it includes source data, task pro
 ## Repository structure
 
 - [data/](data/) — source datasets and dataset documentation
-- [docs/](docs/) — instructions on how to approach data modeling
+- [materials/](materials/) — additional materials to study data modeling
 - [tasks/](tasks/) — challenge tasks and requirements
 
-## Quick start
+## Data modeling tasks
 
-1. Review the source data in [data/ecommerce/](data/ecommerce/).
-2. Read the dataset dictionary in [data/ecommerce.md](data/ecommerce.md).
-3. Open the assignments in [tasks/README.md](tasks/README.md).
-4. Design your model and record your work in [docs/](docs/).
+There are six tasks available to solve:
+
+| # | Task | Difficulty | Type |
+|---|---|---|---|
+| 01 | [Revenue Reporting](tasks/task-01-revenue-reporting/) | ⭐️ | Entity / Fact table |
+| 02 | [Product Sales Report](tasks/task-02-product-sales-report/) | ⭐️ | Join + Aggregation |
+| 03 | [Star Schema Design](tasks/task-03-star-schema/) | ⭐️⭐️ | Dimensional Modeling |
+| 04 | [Hotel Booking Data Marts](tasks/task-04-hotel-booking-marts/) | ⭐️⭐️ | Theoretical / Design-only |
+| 05 | [User Conversion Funnel](tasks/task-05-conversion-funnel/) | ⭐️⭐️⭐️ | Window Functions + Funnel |
+| 06 | [Sessionization & Cart Abandonment](tasks/task-06-sessionization/) | ⭐️⭐️⭐️ | Advanced Window Functions |
+
+It should be possible to solve challenges in any order.
+
+However, if you're only getting started, I recommend completing them in order. This way you will get a natural progression from fundamentals to more advanced concepts and tasks.
+
+Each task folder contains three files.
+
+A `README.md` file contains the task description:
+- **Context** – the business problem
+- **Goal** – what to build
+- **Requirements** – constraints and rules to follow
+- **Hints** – syntax nudges and common pitfalls
+
+A `THEORY.md` file contains necessary theory to accomplish the task. Beginners will find helpful theoretical knowledge and definitions to get started with the task. The file also contains useful directions if you get stuck or are lost on the task.
+
+`SOLUTION.md` file is your space. Feel free to describe your solution, your thinking process, assumptions and trade-offs. Also explain any assets (images or scripts) that you are attaching with the solution.
 
 ## Suggested workflow
 
@@ -50,4 +72,3 @@ This repository is a self-contained challenge: it includes source data, task pro
 - Keep your solution practical and explainable.
 - Prefer clarity over unnecessary complexity.
 - Make assumptions explicit when requirements are ambiguous.
-
