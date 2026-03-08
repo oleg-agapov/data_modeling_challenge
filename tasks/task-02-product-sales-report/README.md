@@ -1,5 +1,7 @@
 # Task 02 – Product Sales Report
 
+![Image](image.png)
+
 **Difficulty**: Easy ⭐️
 
 **Data source**: data/ecommerce

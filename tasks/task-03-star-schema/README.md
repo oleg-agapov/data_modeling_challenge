@@ -1,5 +1,7 @@
 # Task 03 – Star Schema Design
 
+![Image](image.png)
+
 **Difficulty**: Medium ⭐️⭐️
 
 **Data source**: data/ecommerce
