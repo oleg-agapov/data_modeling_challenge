@@ -1,5 +1,7 @@
 # Task 06 – Sessionization & Cart Abandonment Analysis
 
+![Image](image.png)
+
 **Difficulty**: Hard ⭐️⭐️⭐️
 
 **Data source**: data/ecommerce

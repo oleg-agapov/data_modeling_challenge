@@ -1,5 +1,7 @@
 # Task 05 – User Conversion Funnel
 
+![Image](image.png)
+
 **Difficulty**: Hard ⭐️⭐️⭐️
 
 **Data source**: data/ecommerce
