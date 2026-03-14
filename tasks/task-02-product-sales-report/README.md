@@ -24,9 +24,13 @@ In this exercise you should use the **following files**:
 
 ## Deliverables
 
-1. `1-conceptual-layer.png`: a conceptual layer diagram. Use [excalidraw](https://excalidraw.com/) or a similar app.
-1. `2-logical-layer.png`: draw the logical layer in [DrawDB](https://www.drawdb.app).
-1. `3-physical-layer.sql`: a script with data models (SELECT-only). Use [PondPilot](pondpilot.io) to upload the source data and create SQL.
+Fill in the `SOLUTION.MD` file in this directory. It must cover three sections:
+
+1. **Conceptual layer** — describe the business entities, their relationships, and the grain of the output model in plain language.
+2. **Logical layer** — define the tables, columns, data types, and keys involved; explain how the source tables relate to each other and how the output model is derived.
+3. **Physical layer** — provide the SQL that builds the model. A plain `SELECT` is fine; `CREATE VIEW` or `CREATE TABLE AS SELECT` are also welcome if you want to persist the model.
+
+You are free to enrich your solution with anything that helps communicate your thinking: diagrams (e.g. [Excalidraw](https://excalidraw.com/), [DrawDB](https://www.drawdb.app)), links, screenshots, or extra explanation. There is no strict format — clarity and correctness matter most.
 
 ## Hints
 

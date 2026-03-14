@@ -19,9 +19,13 @@ Design and populate a **star schema** centred on order line items (the most gran
 
 ## Deliverables
 
-1. `1-conceptual-layer.png`: a conceptual star schema diagram. Use [excalidraw](https://excalidraw.com/) or a similar app.
-1. `2-logical-layer.png`: draw dimensions and fact table with keys and relationships in [DrawDB](https://www.drawdb.app).
-1. `3-physical-layer.sql`: a script with all dimensional and fact models plus validation queries (SELECT-only). Use [PondPilot](pondpilot.io) to upload the source data and create SQL.
+Fill in the `SOLUTION.MD` file in this directory. It must cover three sections:
+
+1. **Conceptual layer** — describe the star schema structure: identify the central fact, the dimensions, and the grain of the fact table in plain language.
+2. **Logical layer** — define all dimension and fact tables with columns, data types, and keys; explain how source tables are mapped to each model.
+3. **Physical layer** — provide the SQL for all dimensional and fact models, plus any validation queries. A plain `SELECT` is fine; `CREATE VIEW` or `CREATE TABLE AS SELECT` are also welcome if you want to persist the model.
+
+You are free to enrich your solution with anything that helps communicate your thinking: diagrams (e.g. [Excalidraw](https://excalidraw.com/), [DrawDB](https://www.drawdb.app)), links, screenshots, or extra explanation. There is no strict format — clarity and correctness matter most.
 
 ## Hints
 

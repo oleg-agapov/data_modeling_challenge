@@ -23,9 +23,13 @@ Design a **conceptual + logical data mart model** for a hotel booking analytics 
 
 ## Deliverables
 
-1. `1-conceptual-layer.png`: a conceptual domain model diagram. Use [excalidraw](https://excalidraw.com/) or a similar app.
-1. `2-logical-layer.png`: a logical star schema (or justified snowflake) with fact and dimension tables. Use [DrawDB](https://www.drawdb.app).
-1. `3-question-mapping.md`: a short write-up mapping each business question to the proposed model (facts, dimensions, and measures).
+Fill in the `SOLUTION.MD` file in this directory. It must cover three sections:
+
+1. **Conceptual layer** — describe the business entities, their relationships, and the grain of the output model in plain language.
+2. **Logical layer** — define the fact and dimension tables with columns, data types, and keys; explain how each source table maps to the proposed model.
+3. **Business question mapping** — for each business question in the Goal section, identify which facts, dimensions, and measures answer it.
+
+You are free to enrich your solution with anything that helps communicate your thinking: diagrams (e.g. [Excalidraw](https://excalidraw.com/), [DrawDB](https://www.drawdb.app)), links, screenshots, or extra explanation. There is no strict format — clarity and correctness matter most.
 
 ## Hints
 
