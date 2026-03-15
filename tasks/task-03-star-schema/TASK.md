@@ -1,15 +1,6 @@
 # Task 03 – Star Schema Design
 
-![Image](image.png)
-
-Restructure the e-commerce data into a star schema centred on order line items.
-
-**Difficulty**: Medium ⭐️⭐️
-
-- **Task**: [TASK.md](TASK.md)
-- **Theory**: [Dimensional Modeling: Facts, Dimensions, and the Star Schema](THEORY.md)
-- **Solution**: [SOLUTION.MD](SOLUTION.MD)
-
+## Context
 
 The BI team is migrating the e-commerce data into an analytics warehouse. The raw operational tables need to be restructured into a **star schema** so that downstream reporting tools can query it efficiently without re-joining every table from scratch.
 
@@ -17,6 +8,13 @@ The BI team is migrating the e-commerce data into an analytics warehouse. The ra
 
 Design and populate a **star schema** centred on order line items (the most granular transactional grain), with four dimension tables.
 
+In this exercise you should use the **following files**:
+
+- `data/ecommerce/orders.csv`
+- `data/ecommerce/order_items.csv`
+- `data/ecommerce/users.csv`
+- `data/ecommerce/products.csv`
+- `data/ecommerce/locations.csv`
 
 ## Deliverables
 
@@ -48,7 +46,6 @@ Hint 1. Target schema
                    │ dim_location│
                    └─────────────┘
 ```
-
 
 </details>
 
@@ -109,7 +106,6 @@ One row per user; treat as a **Type 1 SCD** (overwrite on change, no history).
 | `zip_code` | |
 | `country_code` | `code` |
 
-
 </details>
 
 
@@ -132,12 +128,11 @@ Grain: one row per order line item.
 | `date_key` | integer | FK → `dim_date.date_key` (from `orders.date_ordered`) |
 | `customer_key` | integer | FK → `dim_customer.customer_key` |
 | `product_key` | integer | FK → `dim_product.product_key` |
-| `location_key` | integer | FK → `dim_location.location_key` |
+| `location_key` | integer | FK → `dim_location.location_key` (via `orders.user_id` → `users.loc_id`) |
 | `quantity` | integer | |
 | `unit_price` | numeric(12,2) | Transaction price snapshot |
 | `discount` | numeric(12,2) | |
 | `line_total` | numeric(12,2) | |
-
 
 </details>
 
@@ -157,7 +152,6 @@ After building the schema, write queries to verify:
 1. Row count of `fact_order_items` equals row count of `order_items.csv`.
 2. `SUM(fact_order_items.line_total)` matches `SUM(order_items.line_total)` from the source.
 3. No `NULL` foreign keys exist in any FK column of `fact_order_items`.
-
 
 </details>
 

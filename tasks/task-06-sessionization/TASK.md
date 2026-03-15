@@ -1,15 +1,6 @@
 # Task 06 – Sessionization & Cart Abandonment Analysis
 
-![Image](image.png)
-
-Sessionize raw clickstream events and identify cart abandonment patterns.
-
-**Difficulty**: Hard ⭐️⭐️⭐️
-
-- **Task**: [TASK.md](TASK.md)
-- **Theory**: [Sessionization, Window Functions, and Anti-Join Patterns](THEORY.md)
-- **Solution**: [SOLUTION.MD](SOLUTION.MD)
-
+## Context
 
 Raw clickstream events are stored one row at a time. To reason about user behaviour at the *visit* level, events must first be **sessionized** — grouped into discrete browsing sessions separated by a 30-minute inactivity gap. Once sessions exist, you can identify **cart abandonment**: users who added a product to their cart during a session but never placed an order for it.
 
@@ -21,6 +12,13 @@ Build three layered artefacts on top of `user_events`:
 2. A **session table** (one row per session)
 3. A **cart abandonment report** (one row per user/product pair that was carted but not purchased)
 
+In this exercise you should use the **following files**:
+
+- `data/ecommerce/user_events.csv`
+- `data/ecommerce/users.csv`
+- `data/ecommerce/products.csv`
+- `data/ecommerce/orders.csv`
+- `data/ecommerce/order_items.csv`
 
 ## Deliverables
 

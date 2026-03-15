@@ -1,15 +1,6 @@
 # Task 04 – Hotel Booking Data Marts (Conceptual & Logical Design)
 
-![Image](image.png)
-
-Design a conceptual and logical data mart model for a hotel booking analytics layer.
-
-**Difficulty**: Medium ⭐️⭐️
-
-- **Task**: [TASK.md](TASK.md)
-- **Theory**: [Slowly Changing Dimensions, Data Marts, and Design-First Thinking](THEORY.md)
-- **Solution**: [SOLUTION.MD](SOLUTION.MD)
-
+## Context
 
 A hotel booking platform wants to build an analytics layer on top of its operational data. The data engineering team has been asked to design data marts that will power executive dashboards and enable deeper segment analysis.
 

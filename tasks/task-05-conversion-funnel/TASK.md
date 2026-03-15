@@ -1,15 +1,6 @@
 # Task 05 – User Conversion Funnel
 
-![Image](image.png)
-
-Build a per-user conversion funnel table and aggregate it into funnel stage counts.
-
-**Difficulty**: Hard ⭐️⭐️⭐️
-
-- **Task**: [TASK.md](TASK.md)
-- **Theory**: [Event-Driven Modeling, Funnels, and Cohort Analysis](THEORY.md)
-- **Solution**: [SOLUTION.MD](SOLUTION.MD)
-
+## Context
 
 The product analytics team wants to measure how effectively the platform converts visitors into buyers. They track three key behavioral milestones before a purchase: signing up, viewing a product page, and adding an item to the cart. Mapping the drop-off between each stage reveals where to focus optimisation effort.
 
@@ -18,6 +9,11 @@ The product analytics team wants to measure how effectively the platform convert
 
 Build a **per-user funnel table** and then aggregate it into **funnel stage counts**.
 
+In this exercise you should use the **following files**:
+
+- `data/ecommerce/users.csv`
+- `data/ecommerce/user_events.csv`
+- `data/ecommerce/orders.csv`
 
 ## Deliverables
 
