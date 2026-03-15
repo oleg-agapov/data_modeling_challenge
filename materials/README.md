@@ -43,13 +43,15 @@ A curated list of books, videos, courses, and guides about data modeling.
 
 ## Online Guides and Documentation
 
-- 🖥️ [**Kimball Dimensional Modeling Techniques**](https://www.kimballgroup.com/wp-content/uploads/2013/08/2013.09-Kimball-Dimensional-Modeling-Techniques11.pdf) (PDF, Kimball Group, 2013, ~1–2 hours)
+- 🖥️ [**Kimball Dimensional Modeling Techniques**](https://www.kimballgroup.com/wp-content/uploads/2013/08/2013.09-Kimball-Dimensional-Modeling-Techniques11.pdf) (PDF)
+
+  _Kimball Group, 2013 (~1–2 hours)_
   
   Compact official reference enumerating core dimensional modelling patterns and vocabulary (SCD variants, conformed dimensions, etc.). A great checklist and shared-language document.
 
 - 🖥️ [**Understand star schema and the importance for Power BI**](https://learn.microsoft.com/en-us/power-bi/guidance/star-schema)
   
-  Microsoft Learn, 2024 (~30–60 min)
+  _Microsoft Learn, 2024 (~30–60 min)_
   
   Clear explanation of star schema relevance for semantic models, including when snowflaking is acceptable. Good vendor-backed intro for BI-focused learners.
 
