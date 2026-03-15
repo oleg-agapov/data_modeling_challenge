@@ -42,7 +42,6 @@ Table orders {
   date_ordered   timestamp [note: 'Order placement timestamp']
   status         text   [note: 'Order status (pending, shipped, delivered, cancelled)']
   payment_method text   [note: 'Payment channel (credit card, bank transfer, paypal)']
-  total_amount   decimal   [note: 'Final order total; should equal sum of order_items.line_total']
   updated        timestamp [note: 'Last record update timestamp']
 }
 

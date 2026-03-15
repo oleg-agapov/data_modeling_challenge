@@ -75,7 +75,6 @@ This document describes the datasets in `data/ecommerce/` and explains each fiel
 | `date_ordered` | datetime | Order creation/placement timestamp. |
 | `status` | string | Current order status. Observed values: `pending`, `shipped`, `delivered`, `cancelled`. |
 | `payment_method` | string | Payment channel used. Observed values: `credit card`, `bank transfer`, `paypal`. |
-| `total_amount` | decimal | Final order total amount. Typically equals sum of associated `order_items.line_total`. |
 | `updated` | datetime | Last update timestamp for the order record (often same as `date_ordered` in current data). |
 
 ## `order_items.csv`
