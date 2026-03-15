@@ -11,6 +11,12 @@ A curated list of books, videos, courses, and guides about data modeling.
   
   Workshop-oriented book that walks through translating business requirements into dimensional structures quickly and collaboratively.
 
+- 📖 [**Data Modeling with Snowflake: A practical guide to accelerating Snowflake development using universal modeling techniques**](https://www.amazon.com/Data-Modeling-Snowflake-accelerating-development/dp/1837634459)
+
+  _Serge Gershkovich, 2023_
+
+  Practical guide to data modeling patterns and techniques specifically in Snowflake, covering universal modeling approaches to accelerate warehouse development.
+
 - 📖 [**The Data Warehouse Toolkit: The Definitive Guide to Dimensional Modeling**](https://www.amazon.ca/Data-Warehouse-Toolkit-Definitive-Dimensional/dp/1118530802/ref=asc_df_1118530802)
   
   _Ralph Kimball & Margy Ross, 2013 (~25–45 hours)_
