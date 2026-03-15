@@ -16,7 +16,7 @@ This document describes the datasets in `data/ecommerce/` and explains each fiel
 ## Entity relationships
 
 - `orders.user_id` → `users.id`
-- `orders.loc_id` → `locations.id`
+- `users.loc_id` → `locations.id`
 - `order_items.order_id` → `orders.id`
 - `order_items.product_id` → `products.id`
 - `user_events.user_id` → `users.id`
@@ -33,6 +33,7 @@ This document describes the datasets in `data/ecommerce/` and explains each fiel
 | `lastName` | string | User last name. |
 | `email` | string | User email address (appears mostly unique; may include duplicates). |
 | `created_on` | datetime | Account creation timestamp. |
+| `loc_id` | UUID | User's default shipping/destination location. Foreign key to `locations.id`. |
 
 ## `products.csv`
 
@@ -72,7 +73,6 @@ This document describes the datasets in `data/ecommerce/` and explains each fiel
 | `id` | UUID | Unique order identifier. |
 | `user_id` | UUID | User who placed the order. Foreign key to `users.id`. |
 | `date_ordered` | datetime | Order creation/placement timestamp. |
-| `loc_id` | UUID | Shipping/destination location. Foreign key to `locations.id`. |
 | `status` | string | Current order status. Observed values: `pending`, `shipped`, `delivered`, `cancelled`. |
 | `payment_method` | string | Payment channel used. Observed values: `credit card`, `bank transfer`, `paypal`. |
 | `total_amount` | decimal | Final order total amount. Typically equals sum of associated `order_items.line_total`. |

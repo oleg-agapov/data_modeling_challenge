@@ -7,61 +7,61 @@ Project ecommerce {
 }
 
 Table users {
-  id         varchar [pk, note: 'UUID – unique user identifier']
-  firstName  varchar [not null, note: 'User first name']
-  lastName   varchar [not null, note: 'User last name']
-  email      varchar [not null, note: 'User email address']
-  created_on timestamp [not null, note: 'Account creation timestamp']
+  id         text [pk, note: 'UUID – unique user identifier']
+  firstName  text [note: 'User first name']
+  lastName   text [note: 'User last name']
+  email      text [note: 'User email address']
+  created_on timestamp [note: 'Account creation timestamp']
+  loc_id     text [ref: > locations.id, note: 'FK → locations.id (user default shipping location)']
 }
 
 Table products {
-  id          varchar   [pk, note: 'UUID – unique product identifier']
-  name        varchar   [not null, note: 'Product display name']
-  category    varchar   [not null, note: 'Product category (Living Room, Bedroom, Kitchen)']
+  id          text   [pk, note: 'UUID – unique product identifier']
+  name        text   [note: 'Product display name']
+  category    text   [note: 'Product category (Living Room, Bedroom, Kitchen)']
   description text      [note: 'Human-readable product description']
-  price       decimal   [not null, note: 'Catalog / base price']
-  dimensions  varchar   [note: 'Free-text dimensions, e.g. "180 x 90 x 75"']
-  material    varchar   [note: 'Main materials used']
-  stock       integer   [not null, note: 'Available inventory quantity at extraction time']
+  price       decimal   [note: 'Catalog / base price']
+  dimensions  text   [note: 'Free-text dimensions, e.g. "180 x 90 x 75"']
+  material    text   [note: 'Main materials used']
+  stock       integer   [note: 'Available inventory quantity at extraction time']
 }
 
 Table locations {
-  id          varchar [pk, note: 'UUID – unique location identifier']
-  code        varchar [not null, note: 'Country code (observed: US)']
-  fullName    varchar [not null, note: 'Country full name']
-  city        varchar [not null, note: 'City name']
-  address     varchar [not null, note: 'Street address line']
-  zip_code    varchar [not null, note: 'Postal / ZIP code (stored as string to preserve leading zeros)']
-  stateRegion varchar [not null, note: 'State or region name']
+  id          text [pk, note: 'UUID – unique location identifier']
+  code        text [note: 'Country code (observed: US)']
+  fullName    text [note: 'Country full name']
+  city        text [note: 'City name']
+  address     text [note: 'Street address line']
+  zip_code    text [note: 'Postal / ZIP code (stored as string to preserve leading zeros)']
+  stateRegion text [note: 'State or region name']
 }
 
 Table orders {
-  id             varchar   [pk, note: 'UUID – unique order identifier']
-  user_id        varchar   [not null, ref: > users.id, note: 'FK → users.id']
-  date_ordered   timestamp [not null, note: 'Order placement timestamp']
-  loc_id         varchar   [not null, ref: > locations.id, note: 'FK → locations.id (shipping destination)']
-  status         varchar   [not null, note: 'Order status (pending, shipped, delivered, cancelled)']
-  payment_method varchar   [not null, note: 'Payment channel (credit card, bank transfer, paypal)']
-  total_amount   decimal   [not null, note: 'Final order total; should equal sum of order_items.line_total']
-  updated        timestamp [not null, note: 'Last record update timestamp']
+  id             text   [pk, note: 'UUID – unique order identifier']
+  user_id        text   [ref: > users.id, note: 'FK → users.id']
+  date_ordered   timestamp [note: 'Order placement timestamp']
+  status         text   [note: 'Order status (pending, shipped, delivered, cancelled)']
+  payment_method text   [note: 'Payment channel (credit card, bank transfer, paypal)']
+  total_amount   decimal   [note: 'Final order total; should equal sum of order_items.line_total']
+  updated        timestamp [note: 'Last record update timestamp']
 }
 
 Table order_items {
-  id         varchar [pk, note: 'UUID – unique order line identifier']
-  order_id   varchar [not null, ref: > orders.id, note: 'FK → orders.id']
-  product_id varchar [not null, ref: > products.id, note: 'FK → products.id']
-  quantity   integer [not null, note: 'Quantity purchased for this line']
-  unit_price decimal [not null, note: 'Per-unit selling price captured at purchase time']
-  discount   decimal [not null, default: 0, note: 'Discount amount applied at line level']
-  line_total decimal [not null, note: 'Extended line amount (quantity * unit_price - discount)']
+  id         text [pk, note: 'UUID – unique order line identifier']
+  order_id   text [ref: > orders.id, note: 'FK → orders.id']
+  product_id text [ref: > products.id, note: 'FK → products.id']
+  quantity   integer [note: 'Quantity purchased for this line']
+  unit_price decimal [note: 'Per-unit selling price captured at purchase time']
+  discount   decimal [default: 0, note: 'Discount amount applied at line level']
+  line_total decimal [note: 'Extended line amount (quantity * unit_price - discount)']
 }
 
 Table user_events {
-  event_id           varchar   [pk, note: 'UUID – unique event identifier']
-  user_id            varchar   [not null, ref: > users.id, note: 'FK → users.id']
-  event_type         varchar   [not null, note: 'Event type (user_sign_up, page_view, add_to_cart)']
-  event_timestamp    timestamp [not null, note: 'Event occurrence timestamp']
-  page_url           varchar   [not null, note: 'URL / path where the event occurred']
-  product_id         varchar   [null, ref: > products.id, note: 'FK → products.id; nullable, populated for product-related events only']
+  event_id           text   [pk, note: 'UUID – unique event identifier']
+  user_id            text   [ref: > users.id, note: 'FK → users.id']
+  event_type         text   [note: 'Event type (user_sign_up, page_view, add_to_cart)']
+  event_timestamp    timestamp [note: 'Event occurrence timestamp']
+  page_url           text   [note: 'URL / path where the event occurred']
+  product_id         text   [null, ref: > products.id, note: 'FK → products.id; nullable, populated for product-related events only']
   additional_details text      [null, note: 'Extra event metadata; currently empty in all records']
 }
