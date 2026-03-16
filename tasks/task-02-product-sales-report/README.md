@@ -6,7 +6,6 @@ Build a product-level sales report aggregating sales metrics per product.
 
 **Difficulty**: Easy ⭐️
 
-- **Task**: [TASK.md](TASK.md)
-- **Theory**: [Grain Choices, Aggregation Patterns, and Join Safety](THEORY.md)
-- **Solution**: [SOLUTION.MD](SOLUTION.MD)
-
+The **task** is here: [TASK.md](TASK.md)
+**Theory**: [Grain Choices, Aggregation Patterns, and Join Safety](THEORY.md)
+**Solution** template: [SOLUTION.MD](SOLUTION.MD)

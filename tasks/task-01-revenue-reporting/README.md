@@ -6,6 +6,8 @@ Build an order-level fact table that serves as a foundation for revenue reportin
 
 **Difficulty**: Easy ⭐️
 
-- **Task**: [TASK.md](TASK.md)
-- **Theory**: [The Three Layers of Data Modeling](THEORY.md)
-- **Solution**: [SOLUTION.md](SOLUTION.md)
+The **task** is here: [TASK.md](TASK.md)
+**Theory**: [The Three Layers of Data Modeling](THEORY.md)
+**Solution** template: [SOLUTION.md](SOLUTION.md)
+
+[Only for this task] Example **solution**: [SOLUTION-example.md](SOLUTION-example.md)
