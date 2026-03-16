@@ -2,6 +2,8 @@
 
 This document describes the datasets in `data/ecommerce/` and explains each field based on observed data patterns.
 
+![Data source schema](./ecommerce/erd.png)
+
 ## Dataset overview
 
 | Dataset | Description | Approx. rows | Primary key |
