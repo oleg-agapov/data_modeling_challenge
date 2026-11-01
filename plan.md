@@ -200,7 +200,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Dialect note ("examples are DuckDB SQL; minor changes needed elsewhere") + a "verify setup" row-count query.
   - Done when: `duckdb < setup.sql` works from repo root and the browser variant works.
 
-- [ ] **Step 6 — Task 02 fixes** (`task-02/TASK.md`, `THEORY.md`)
+- [x] **Step 6 — Task 02 fixes** (done; `avg_selling_price` replaced by `avg_revenue_per_order` to keep the NULLIF lesson; added "rates are not amounts" theory. Verified: 21 rows, non-cancelled revenue 630,677.32, discount_amount 19,490.77 vs meaningless SUM(discount) 44.65) (`task-02/TASK.md`, `THEORY.md`)
   - Replace `total_discount` with `discount_amount = SUM(quantity * unit_price * discount)`.
   - Drop `avg_selling_price` and `price_diff`; keep `catalog_price`.
   - Note that all products have sales in this dataset; LEFT JOIN is still the correct, future-proof pattern.

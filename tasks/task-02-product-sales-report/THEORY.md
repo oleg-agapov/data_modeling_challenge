@@ -89,7 +89,7 @@ When a `LEFT JOIN` finds no match, all columns from the right side are `NULL`. F
 COALESCE(ps.units_sold, 0)   -- 0 for products with no sales
 ```
 
-For metrics that are genuinely undefined (e.g., average selling price for an unsold product), leave them as `NULL`. A `NULL` communicates "this is unknown" — overwriting it with `0` would claim the product sold at zero price, which is wrong.
+For metrics that are genuinely undefined (e.g., average revenue per order for a product that was never ordered), leave them as `NULL`. A `NULL` communicates "this cannot be calculated" — overwriting it with `0` would claim each order of the product brought in zero revenue, which is wrong.
 
 ### NULLIF — prevent division by zero
 
@@ -108,11 +108,21 @@ When designing a product-level model, it helps to classify every metric you comp
 | Type | Definition | Example |
 |---|---|---|
 | **Count** | Raw volume of events | `times_ordered`, `units_sold` |
-| **Sum** | Additive total | `total_revenue`, `total_discount` |
-| **Average** | Sum ÷ count | `avg_selling_price` |
-| **Derived / Ratio** | Computed from other metrics | `price_diff`, `sell_through_rate` |
+| **Sum** | Additive total | `total_revenue`, `discount_amount` |
+| **Average** | Sum ÷ count | `avg_revenue_per_order` |
+| **Derived / Ratio** | Computed from other metrics | `sell_through_rate` |
 
-Counts and sums are the most reliable — they can be `SUM`'d further up the reporting chain. Averages and ratios are **not** re-aggregatable: if you average product-level `avg_selling_price` across products you get a simple mean that ignores volume. Store the components (sum, count) in the model and let consumers compute averages themselves when needed.
+Counts and sums are the most reliable — they can be `SUM`'d further up the reporting chain. Averages and ratios are **not** re-aggregatable: if you average product-level `avg_revenue_per_order` across products you get a simple mean that ignores how many orders each product had. Store the components (sum, count) in the model and let consumers compute averages themselves when needed.
+
+### Rates are not amounts
+
+Watch out for columns that already hold a ratio. In `order_items`, `discount` is a **rate** (`0.15` means 15% off), not money. `SUM(discount)` adds up percentages from different lines, which has no business meaning. Convert a rate into an amount at the row level first, then aggregate:
+
+```sql
+SUM(quantity * unit_price * discount) AS discount_amount  -- money given away
+```
+
+Always check whether a numeric column is an amount, a count, or a rate before you `SUM` it. The dataset documentation is the first place to look.
 
 ---
 
@@ -122,6 +132,6 @@ Once you have built the product-level report, always run sanity checks:
 
 1. **Row count** — equals the number of distinct products in `products.csv`.
 2. **Revenue reconciliation** — `SUM(total_revenue)` in your output should equal `SUM(oi.line_total)` from `order_items` filtered to non-cancelled orders.
-3. **NULL audit** — confirm that `product_id` and `product_name` are never `NULL`; confirm that `avg_selling_price` is `NULL` only for products with zero sales.
+3. **NULL audit** — confirm that `product_id` and `product_name` are never `NULL`; confirm that `avg_revenue_per_order` is `NULL` only for products with zero sales.
 
 These three checks catch the majority of fan-out bugs, silent filter errors, and join direction mistakes.
