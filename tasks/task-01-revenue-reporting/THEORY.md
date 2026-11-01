@@ -31,7 +31,7 @@ The logical model answers: **what information do we need to capture about each e
 Now you move into attributes — the columns — but still without worrying about a specific database technology. You define:
 - **Primary keys** (what uniquely identifies each entity)
 - **Foreign keys** (what links one entity to another)
-- **Attributes** (descriptive fields like `status`, `date_ordered`, `payment_method`)
+- **Attributes** (descriptive fields like `order_status`, `order_date`, `payment_method`)
 - **Grain** — the single most important decision in any analytical model (see below)
 
 A logical model for this task would show the `orders` table with its columns, `order_items` with its columns, and a line between them on `order_id`.
@@ -62,7 +62,7 @@ Operational (OLTP) systems are optimized for writing data quickly and consistent
 
 1. Resolve the grain — pick the level of detail that answers the question.
 2. Pre-aggregate finer-grained sources (e.g. `order_items` → order-level totals).
-3. Enrich the result by joining in descriptive attributes (e.g. `users.payment_method`).
+3. Enrich the result by joining in descriptive attributes (e.g. `orders.payment_method`).
 4. Keep the model additive — make every metric computable by simple `SUM`, `COUNT`, or `AVG` without re-joins.
 
 This task walks you through exactly that pattern: aggregate `order_items` to order grain → join to `orders` → produce a clean, self-contained fact table.

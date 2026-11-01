@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Share your solution
+    url: https://github.com/oleg-agapov/data_modeling_challenge/discussions/categories/show-your-solution
+    about: Post a link to your solved tasks and get feedback from other learners.
+  - name: Ask a question
+    url: https://github.com/oleg-agapov/data_modeling_challenge/discussions/categories/q-a
+    about: Stuck on a concept or a task? Ask in Discussions.

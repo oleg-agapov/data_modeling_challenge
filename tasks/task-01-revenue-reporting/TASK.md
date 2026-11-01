@@ -7,7 +7,7 @@ The finance team needs a reliable, order-grained foundation for revenue reportin
 
 ## Goal
 
-Build an **order-level fact table** with one row per `order_id`. The model must be rich enough that the following metrics can be derived from it directly, without joining back to the source tables:
+Build an **order-level fact table** named `fct_orders`, with one row per `order_id`. The model must be rich enough that the following metrics can be derived from it directly, without joining back to the source tables:
 
 - **Order count** — total number of orders (overall or by any dimension)
 - **Gross revenue** — total revenue across orders
@@ -22,13 +22,37 @@ In this exercise you should use the **following files**:
 
 ## Deliverables
 
-Fill in the `SOLUTION.MD` file in this directory. It must cover three sections:
+Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 
 1. **Conceptual layer** — describe the business entities, their relationships, and the grain of the output model in plain language.
 2. **Logical layer** — define the tables, columns, data types, and keys involved; explain how the source tables relate to each other and how the output model is derived.
 3. **Physical layer** — provide the SQL that builds the model. A plain `SELECT` is fine; `CREATE VIEW` or `CREATE TABLE AS SELECT` are also welcome if you want to persist the model.
 
 You are free to enrich your solution with anything that helps communicate your thinking: diagrams (e.g. [Excalidraw](https://excalidraw.com/), [DrawDB](https://www.drawdb.app)), links, screenshots, or extra explanation. There is no strict format — clarity and correctness matter most.
+
+## Check your solution
+
+When your model is built, run the automatic checks from the repository root, in the same database:
+
+```sql
+.read tasks/task-01-revenue-reporting/checks.sql
+```
+
+(In the browser or another SQL tool, open [`checks.sql`](checks.sql), copy it, and run it.) The checks look for a model named `fct_orders` with the column names from the hints. Every row should say `PASS`; a `FAIL` row shows the expected and actual values, so you can find the bug.
+
+When everything passes, compare your reasoning with the [reference solution](../../reference-solutions/task-01-revenue-reporting/SOLUTION.md). Try the task on your own first!
+
+## Before you submit
+
+Use this checklist to review your `SOLUTION.md` before you call the task done. The automatic checks test your SQL; these points cover the thinking that SQL can't show.
+
+- [ ] You state the grain of `fct_orders` in one sentence ("one row per …").
+- [ ] Your conceptual layer talks about business entities (customer, order, order line) without table or column names.
+- [ ] Your logical layer lists every output column with its type, its source, and the primary key.
+- [ ] You explain why `order_items` must be aggregated before it is joined to `orders`, and what would go wrong otherwise.
+- [ ] You explain your decision about cancelled orders: are they in the model, and how does someone get revenue without them?
+- [ ] You show how each required metric (order count, gross revenue, AOV, ARPU, status split) is calculated from `fct_orders` alone.
+- [ ] `checks.sql` passes.
 
 ## Hints
 
@@ -39,10 +63,10 @@ Hint 1. Required output columns
 
 | Column | Description |
 |---|---|
-| `order_id` | Primary key — unique identifier for the order (`orders.id`) |
+| `order_id` | Primary key — unique identifier for the order (`orders.order_id`) |
 | `user_id` | The customer who placed the order (`orders.user_id`) |
-| `date_ordered` | Timestamp of when the order was placed |
-| `status` | Order status: `pending`, `shipped`, `delivered`, or `cancelled` |
+| `order_date` | Timestamp of when the order was placed |
+| `order_status` | Order status: `pending`, `shipped`, `delivered`, or `cancelled` |
 | `payment_method` | Payment method used for the order |
 | `total_items` | Sum of `quantity` across all line items for this order |
 | `gross_revenue` | Sum of `line_total` across all line items for this order |
@@ -56,8 +80,8 @@ Hint 2. Additional guidance
 </summary>
 
 - Aggregate `order_items` to order grain first (e.g. a CTE or subquery), then join to `orders` to avoid row fan-out.
-- Join `orders` to `order_items` on `order_items.order_id = orders.id`.
+- Join `orders` to `order_items` on `order_items.order_id = orders.order_id`.
 - Aggregate `order_items` to order grain **before** (or within) the final join — the output must have exactly one row per `order_id`.
-- Retain **all** orders regardless of status; the `status` column allows consumers to filter or pivot as needed.
+- Retain **all** orders regardless of status; the `order_status` column allows consumers to filter or pivot as needed.
 
 </details>

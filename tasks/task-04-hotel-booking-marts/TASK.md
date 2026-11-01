@@ -6,44 +6,48 @@ A hotel booking platform wants to build an analytics layer on top of its operati
 
 The deliverable is a **design document**, not code. You should produce:
 1. A **conceptual model** — key business entities and their relationships.
-1. A **logical model** — fact and dimension tables with column-level definitions, grain statements, and notes on how the model answers each business question.
+2. A **logical model** — fact and dimension tables with column-level definitions, grain statements, and notes on how the model answers each business question.
+
+There is no dataset for this task: you design the model from the business requirements alone. This is how many real projects start.
 
 
 ## Goal
 
-Design a **conceptual + logical data mart model** for a hotel booking analytics layer so that all required business questions are answerable from the final design.
+Design a **conceptual + logical data mart model** for a hotel booking analytics layer so that all of the following business questions are answerable from the final design:
+
+1. **General business health** — What does the overall booking volume, revenue, average daily rate (ADR), and cancellation rate look like over time? Are key metrics improving or declining month-over-month?
+2. **Local vs. international demand** — What share of bookings (and revenue) comes from guests whose country of origin differs from the property's country? How does this split vary by property, region, or season — and what does it imply for marketing budget allocation?
+3. **Occupancy and capacity utilization** — How fully booked are properties over time, broken down by room type and season? Where is there persistent under- or over-demand?
+4. **Guest retention and loyalty** — What proportion of bookings come from returning guests vs. first-timers? How does lifetime booking value differ between the two segments, and which channels tend to produce more loyal guests?
 
 
 ## Deliverables
 
-Fill in the `SOLUTION.MD` file in this directory. It must cover three sections:
+Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 
 1. **Conceptual layer** — describe the business entities, their relationships, and the grain of the output model in plain language.
-2. **Logical layer** — define the fact and dimension tables with columns, data types, and keys; explain how each source table maps to the proposed model.
+2. **Logical layer** — define the fact and dimension tables with columns, data types, and keys; explain the grain of each table and which business entity it comes from.
 3. **Business question mapping** — for each business question in the Goal section, identify which facts, dimensions, and measures answer it.
 
 You are free to enrich your solution with anything that helps communicate your thinking: diagrams (e.g. [Excalidraw](https://excalidraw.com/), [DrawDB](https://www.drawdb.app)), links, screenshots, or extra explanation. There is no strict format — clarity and correctness matter most.
+
+## Before you submit
+
+Use this checklist to review your `SOLUTION.md` before you call the task done. These points cover the thinking a reviewer would look for.
+
+- [ ] Each of the four business questions is mapped to specific facts, dimensions, and measures.
+- [ ] Every relationship in your conceptual model has a cardinality and says whether it is mandatory or optional.
+- [ ] Every fact table has a one-sentence grain, and you explain what you gain or lose with that grain.
+- [ ] Every dimension has a stated SCD type (1 or 2) with a reason.
+- [ ] `is_international` has one unambiguous definition, including what happens when a guest's country is unknown.
+- [ ] You explain how cancellations are modeled and how they affect revenue and occupancy metrics.
+- [ ] You discuss at least one trade-off you made, and what you would do differently with more information.
 
 ## Hints
 
 <details>
 <summary>
-Hint 1. Business questions to answer
-</summary>
-
-The following questions must all be answerable from the final model:
-
-1. **General business health** — What does the overall booking volume, revenue, average daily rate (ADR), and cancellation rate look like over time? Are key metrics improving or declining month-over-month?
-1. **Local vs. international demand** — What share of bookings (and revenue) comes from guests whose country of origin differs from the property's country? How does this split vary by property, region, or season — and what does it imply for marketing budget allocation?
-1. **Occupancy and capacity utilization** — How fully booked are properties over time, broken down by room type and season? Where is there persistent under- or over-demand?
-1. **Guest retention and loyalty** — What proportion of bookings come from returning guests vs. first-timers? How does lifetime booking value differ between the two segments, and which channels tend to produce more loyal guests?
-
-</details>
-
-
-<details>
-<summary>
-Hint 2. Conceptual model requirements
+Hint 1. Conceptual model requirements
 </summary>
 
 Identify the core business **entities** involved in the hotel booking domain and describe the relationships between them. At minimum, your model should cover:
@@ -67,7 +71,7 @@ Example entry: `A Guest can make many Bookings; each Booking belongs to exactly 
 
 <details>
 <summary>
-Hint 3. Logical model requirements
+Hint 2. Logical model requirements
 </summary>
 
 Design a **star schema** (or justified snowflake variant) with at least one fact table and supporting dimension tables. For each table, define the grain, all columns with types and descriptions, and note whether any surrogate keys are needed.
@@ -81,7 +85,7 @@ Define columns for the following categories:
 - **Foreign keys** to all relevant dimensions (date of booking, check-in date, check-out date, guest, property, room type, channel)
 - **Degenerate dimensions** that live on the fact but do not warrant their own dimension (e.g. booking reference number)
 - **Additive measures**: booking value, number of nights, number of guests
-- **Semi-additive or derived measures**: lead time in days (booking date -> check-in date), `is_cancelled` flag, `is_international` flag (guest country != property country)
+- **Non-additive measures and flags**: lead time in days (booking date → check-in date; average it, don't sum it), `is_cancelled` flag, `is_international` flag (guest country ≠ property country)
 
 ### Required dimension tables
 
@@ -102,7 +106,7 @@ For each dimension, state whether you would implement **Slowly Changing Dimensio
 
 <details>
 <summary>
-Hint 4. Question-to-model mapping and quality criteria
+Hint 3. Question-to-model mapping and quality criteria
 </summary>
 
 For each of the four business questions, write a short paragraph (3-5 sentences) explaining:
@@ -122,7 +126,7 @@ A strong submission will:
 
 <details>
 <summary>
-Hint 5. Stretch goal
+Hint 4. Stretch goal
 </summary>
 
 Propose a second fact table - `fact_availability` - at the grain of **one row per room type per night**, carrying an `available_rooms` measure. Describe how it would be joined to `fact_bookings` to compute **occupancy rate**, and discuss any fan-out or double-counting risks in such a join.

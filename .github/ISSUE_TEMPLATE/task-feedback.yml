@@ -1,0 +1,87 @@
+name: Task feedback
+description: Something was unclear, too hard, too easy, or wrong in a task, the theory, the data docs, or the setup.
+title: "[Feedback] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to give feedback! This challenge is in beta, and reports like yours are how it gets better.
+
+        Please **don't paste your full solution** here (other learners may read it). Share solutions in [Discussions](https://github.com/oleg-agapov/data_modeling_challenge/discussions) instead.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part is this about?
+      options:
+        - Getting started / setup
+        - Dataset or its documentation
+        - Task 01 – Revenue Reporting
+        - Task 02 – Product Sales Report
+        - Task 03 – Star Schema Design
+        - Task 04 – Hotel Booking Data Marts
+        - Task 05 – User Conversion Funnel
+        - Task 06 – Event Enrichment & Cart Abandonment
+        - Reference solutions
+        - Something else
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of feedback is it?
+      multiple: true
+      options:
+        - Instructions were unclear
+        - Too hard / I got stuck
+        - Too easy
+        - Mistake in the theory or docs
+        - checks.sql fails on what I think is a correct answer
+        - Setup or tooling problem
+        - Idea or suggestion
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: What happened?
+      description: Where did you get stuck or what was wrong? Link or quote the part of the file you mean. For a failing check, paste the check output.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: What would have helped?
+      description: Optional. A clearer sentence, an extra hint, a different example…
+
+  - type: dropdown
+    id: time
+    attributes:
+      label: How long did the task take you (or how long before you got stuck)?
+      options:
+        - Less than 30 minutes
+        - 30–60 minutes
+        - 1–2 hours
+        - 2–4 hours
+        - More than 4 hours
+        - Not applicable
+
+  - type: dropdown
+    id: experience
+    attributes:
+      label: Your experience with data modeling before this challenge
+      options:
+        - None, this is my first time
+        - Some, I've built a few models
+        - I work with data models regularly
+        - Prefer not to say
+
+  - type: input
+    id: tool
+    attributes:
+      label: Which tool did you use to run SQL?
+      placeholder: e.g. DuckDB CLI 1.4, shell.duckdb.org, PostgreSQL 16, Snowflake

@@ -44,7 +44,7 @@ A curated list of books, videos, courses, and guides about data modeling.
   
   _Coursera (3-course series) (~40 hours)_
   
-  Structured programm covering facts, dimensions, and star schemas in the context of modern analytics engineering (dbt, testing, documentation, BI delivery).
+  Structured program covering facts, dimensions, and star schemas in the context of modern analytics engineering (dbt, testing, documentation, BI delivery).
 
 
 ## Online Guides and Documentation

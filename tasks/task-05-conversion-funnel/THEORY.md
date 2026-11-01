@@ -24,7 +24,7 @@ A conversion funnel is the most common behavioral analytic pattern. It maps the 
 Registered → Viewed a product → Added to cart → Purchased
 ```
 
-Every step is a strict subset of the previous one — you cannot purchase without having registered. The model you build must capture:
+Ideally every step is a subset of the previous one — you cannot purchase without having registered. Real data doesn't always behave like this (a site might let users add to cart straight from a listing page, skipping the product page), so check it. In this dataset the funnel is strictly nested. The model you build must capture:
 
 1. **Whether** a user reached each milestone (a boolean flag per stage)
 2. **When** they first reached it (a timestamp)
@@ -67,9 +67,9 @@ WITH user_event_flags AS (
     GROUP BY user_id
 )
 -- Step 2: join the aggregated CTE to the user spine
-SELECT u.id, uef.did_view_product, uef.did_add_to_cart
+SELECT u.user_id, uef.did_view_product, uef.did_add_to_cart
 FROM users u
-LEFT JOIN user_event_flags uef ON uef.user_id = u.id
+LEFT JOIN user_event_flags uef ON uef.user_id = u.user_id
 ```
 
 ---
@@ -90,13 +90,27 @@ UNION ALL
 SELECT 'purchased'      AS stage, SUM(did_purchase)      FROM funnel_users
 ```
 
-`pct_of_registered` is then computed by dividing each count by the first count. Use a subquery or window function to avoid a second full scan:
+`pct_of_registered` is each stage's count divided by the `registered` count. A window function can bring that number onto every row. Add a `stage_order` column so the stages stay in funnel order:
 
 ```sql
--- Using a window function to carry the total across rows
-SUM(users_reached) OVER ()  -- This gives the total in all rows, not what we want
--- Instead: divide by a fixed subquery reference or use the first row's value
+WITH stages AS (
+    SELECT 1 AS stage_order, 'registered'     AS stage, COUNT(*)              AS users_reached FROM funnel_users
+    UNION ALL
+    SELECT 2,                'viewed_product',          SUM(did_view_product)                  FROM funnel_users
+    UNION ALL
+    SELECT 3,                'added_to_cart',           SUM(did_add_to_cart)                   FROM funnel_users
+    UNION ALL
+    SELECT 4,                'purchased',               SUM(did_purchase)                      FROM funnel_users
+)
+SELECT
+    stage,
+    users_reached,
+    ROUND(100.0 * users_reached / MAX(users_reached) OVER (), 1) AS pct_of_registered
+FROM stages
+ORDER BY stage_order
 ```
+
+`MAX(users_reached) OVER ()` works because `registered` is always the largest stage. A common mistake is `SUM(users_reached) OVER ()`: it adds up all four stages, so every percentage comes out too small. If you prefer to be explicit, `FIRST_VALUE(users_reached) OVER (ORDER BY stage_order)` picks the first stage's count.
 
 ---
 
@@ -124,19 +138,22 @@ Group the per-user funnel table by this column, then compute conversion rates pe
 
 Older cohorts have had more time to convert. A January cohort measured in December is more "mature" than a November cohort measured in December. When comparing conversion rates across cohorts, you may want to normalize by **days since registration** rather than comparing raw rates — otherwise older cohorts will always look better.
 
+In this dataset every purchase happens within minutes of sign-up, so all cohorts are effectively mature from day one and you can compare them directly. Keep the bias in mind for real data, where people often buy days or weeks after registering.
+
 ---
 
-## Days-to-Purchase: A Behavioral Metric
+## Time-to-Purchase: A Behavioral Metric
 
-`days_to_first_purchase = first_purchase_at - registered_at` is a simple but powerful metric. It answers:
+The time between registration and first purchase is a simple but powerful metric. In this dataset it's measured in minutes (`minutes_to_first_purchase`), because buyers order within one short visit; in many real products, days are the natural unit. It answers:
 
 - How quickly does the product convert new users?
 - Do high-value customers buy faster or slower?
 - Is the funnel getting faster for recent cohorts?
 
 Design notes:
-- Users who never purchased should have `NULL`, not `0` — zero would imply they purchased on the day they registered.
-- Be careful with timestamp vs. date arithmetic: if `registered_at` is a timestamp and `first_purchase_at` is a timestamp, the difference in SQL may return fractional days. Cast to `DATE` first if you want whole-day counts.
+- Users who never purchased should have `NULL`, not `0` — zero would claim they purchased the moment they registered.
+- Choose the unit deliberately. `date_diff('minute', registered_at, first_purchase_at)` counts minute boundaries crossed; `EXTRACT(EPOCH FROM (first_purchase_at - registered_at)) / 60` gives exact (fractional) minutes. Either is fine if you document it.
+- If you measure in days, cast both timestamps to `DATE` first to get whole-day counts.
 
 ---
 
