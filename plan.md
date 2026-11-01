@@ -221,7 +221,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - 06: **DECIDED (a):** sessionization yields one session per user, so drop Part B (sessionization) and the 24h-conversion stretch. Keep Part A (enriched events) and Part C (cart abandonment). Rename the task (e.g. "Event Enrichment & Cart Abandonment"), update its README/TASK/THEORY/image references and the main README task table; move sessionization theory to Phase 3. The `event_id` tie-breaker note is then only needed where event order matters.
   - Done when: theory snippets for 05/06 run against the `setup.sql` tables.
 
-- [ ] **Step 9 — Coherent READMEs** (`README.md`, `tasks/README.md`, `materials/README.md`)
+- [x] **Step 9 — Coherent READMEs** (done; main README rewritten: audience, beta note, prerequisites, topic column, task-folder file table, solution layers, "Checking your work", "Feedback" via GitHub issues, structure table, license. `tasks/README.md` now has a learning path with concepts per task, dependencies and a how-to. Typo fixed) (`README.md`, `tasks/README.md`, `materials/README.md`)
   - Main README: "Status: beta — feedback welcome", link to `GETTING_STARTED.md`, fix "three files" → four, relabel tasks 05/06 as "Behavioral modeling", explain how to check your work.
   - `tasks/README.md`: learning path, what each task teaches, prerequisites, how to submit.
   - Fix "programm" typo.
@@ -232,6 +232,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Fix output table names in each `TASK.md`: `fct_orders`, `rpt_product_sales`, `fct_order_items`, `dim_customer`, `dim_product`, `dim_date` (+ optional `dim_order_profile`).
   - New `tasks/task-0N-*/checks.sql` returning `check_name | PASS/FAIL` (grain, row counts, revenue reconciliation, NULL/orphan FKs, expected totals from the reference solution).
   - Done when: reference solutions pass all checks; an empty or wrong table fails them.
+  - Update the main README "Checking your work" section to point to `checks.sql` and `reference-solutions/`.
   - Note: Task 01 example validation queries 2–3 rebuild the model inline instead of querying `fct_orders`; simplify when moving it.
 
 - [ ] **Step 11 — Self-review rubric** in every `TASK.md`
@@ -240,7 +241,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
 - [ ] **Step 12 — Community setup**
   - New `.github/ISSUE_TEMPLATE/task-feedback.yml` (which task, what was unclear, time spent) and a short `CONTRIBUTING.md`.
   - **(author)** Enable GitHub Discussions with "Show your solution" and "Q&A" categories.
-  - Document the fork → fill `SOLUTION.md` → post link flow in the README.
+  - Document the fork → fill `SOLUTION.md` → post link flow in the README (extend the existing "Feedback" section, which currently points to GitHub issues).
 
 - [ ] **Step 13 — Final pass**
   - Fresh clone → `setup.sql` → reference solutions → `checks.sql` all pass; click every link.
