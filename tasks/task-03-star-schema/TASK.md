@@ -6,7 +6,7 @@ The BI team is migrating the e-commerce data into an analytics warehouse. The ra
 
 ## Goal
 
-Design and populate a **star schema** centred on order line items (the most granular transactional grain), with three dimension tables: date, customer and product.
+Design and populate a **star schema** centred on order line items (the most granular transactional grain), with three dimension tables: date, customer and product. Name the models `fct_order_items`, `dim_date`, `dim_customer` and `dim_product`.
 
 In this exercise you should use the **following files**:
 
@@ -25,6 +25,18 @@ Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 3. **Physical layer** — provide the SQL for all dimensional and fact models, plus any validation queries. A plain `SELECT` is fine; `CREATE VIEW` or `CREATE TABLE AS SELECT` are also welcome if you want to persist the model.
 
 You are free to enrich your solution with anything that helps communicate your thinking: diagrams (e.g. [Excalidraw](https://excalidraw.com/), [DrawDB](https://www.drawdb.app)), links, screenshots, or extra explanation. There is no strict format — clarity and correctness matter most.
+
+## Check your solution
+
+When your model is built, run the automatic checks from the repository root, in the same database:
+
+```sql
+.read tasks/task-03-star-schema/checks.sql
+```
+
+(In the browser or another SQL tool, open [`checks.sql`](checks.sql), copy it, and run it.) The checks look for the four models `fct_order_items`, `dim_date`, `dim_customer` and `dim_product` with the column names from the hints. Every row should say `PASS`; a `FAIL` row shows the expected and actual values, so you can find the bug.
+
+When everything passes, compare your reasoning with the [reference solution](../../reference-solutions/task-03-star-schema/SOLUTION.md). Try the task on your own first!
 
 ## Hints
 

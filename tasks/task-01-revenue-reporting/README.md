@@ -9,4 +9,5 @@ Build an order-level fact table that serves as a foundation for revenue reportin
 - **Task**: [TASK.md](TASK.md)
 - **Theory**: [The Three Layers of Data Modeling](THEORY.md)
 - **Solution template**: [SOLUTION.md](SOLUTION.md)
-- **Example solution** (only for this task): [SOLUTION-example.md](SOLUTION-example.md)
+- **Checks**: [checks.sql](checks.sql)
+- **Example solution**: [reference solution](../../reference-solutions/task-01-revenue-reporting/SOLUTION.md) (for this task it's fine to read it before you start)

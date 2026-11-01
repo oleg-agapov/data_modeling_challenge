@@ -227,7 +227,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Fix "programm" typo.
   - Done when: a newcomer can get from README to first query without guessing.
 
-- [ ] **Step 10 — Reference solutions + checks for Tasks 01–03**
+- [x] **Step 10 — Reference solutions + checks for Tasks 01–03** (done; `reference-solutions/` with README + Tasks 01–03 incl. stretch goals; Task 01 example moved there with a redrawn `logical.png`; `checks.sql` for Tasks 01 (8 checks), 02 (10), 03 (12) reconcile against source tables, not hard-coded numbers. Verified: reference solutions pass all checks in fresh DBs (Python + CLI v1.4.1); 11 deliberately broken models (fan-out, dropped cancellations, SUM(discount), date gaps, re-numbered keys, YYYYDDMM keys, dropped rows, missing address…) all FAIL the right checks; junk-dim stretch variant still passes. Output model names now stated in each Goal; "Check your solution" section added to TASK.md 01–03; README "Checking your work" updated)
   - New `reference-solutions/task-01…03/` (all three layers); move `task-01/SOLUTION-example.md` there; add a spoiler warning README.
   - Fix output table names in each `TASK.md`: `fct_orders`, `rpt_product_sales`, `fct_order_items`, `dim_customer`, `dim_product`, `dim_date` (+ optional `dim_order_profile`).
   - New `tasks/task-0N-*/checks.sql` returning `check_name | PASS/FAIL` (grain, row counts, revenue reconciliation, NULL/orphan FKs, expected totals from the reference solution).

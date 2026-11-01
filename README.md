@@ -49,7 +49,9 @@ You can solve the tasks in any order. If you're just starting with data modeling
 | `THEORY.md` | The theory you need for the task, with definitions, examples and common pitfalls. Read it first if a concept is new to you, or come back when you get stuck |
 | `SOLUTION.md` | Your space: a template where you describe your model, your reasoning, and your SQL |
 
-Task 01 also includes an [example solution](tasks/task-01-revenue-reporting/SOLUTION-example.md), so you can see what a complete answer looks like before you start.
+Tasks 01–03 also include a `checks.sql` file that tests your model automatically.
+
+Task 01 has an [example solution](reference-solutions/task-01-revenue-reporting/SOLUTION.md) you can read before you start, so you can see what a complete answer looks like.
 
 
 ## Suggested workflow
@@ -79,8 +81,9 @@ Add notes on your assumptions, design trade-offs, and the validation checks you 
 
 ## Checking your work
 
-- Each task lists **validation checks** in its hints: row counts, totals that must match the source, keys that must be unique or must not be NULL. Run them against your model. If a check fails, your model has a bug.
-- For Task 01, compare your answer with the [example solution](tasks/task-01-revenue-reporting/SOLUTION-example.md).
+- **Automatic checks (Tasks 01–03):** run the task's `checks.sql` against your model. It compares your model with the source data (row counts, totals, unique and non-NULL keys, correct joins) and prints `PASS` or `FAIL` for each check, with the expected and actual values.
+- **Validation in the hints:** every task also lists validation checks you can write yourself. Writing them is part of the skill.
+- **Reference solutions:** when your checks pass, compare your reasoning with the [reference solutions](reference-solutions/) (Tasks 01–03 for now). Modeling has trade-offs, so a different but well-argued answer is fine.
 - Keep your solution practical and explainable. Prefer clarity over unnecessary complexity, and make assumptions explicit when the requirements are ambiguous.
 
 
@@ -97,6 +100,7 @@ This is an early version, and the most useful thing you can do is tell me what d
 | [setup.sql](setup.sql) | Script that creates the source tables |
 | [data/](data/) | The e-commerce dataset and its documentation |
 | [tasks/](tasks/) | The challenge tasks |
+| [reference-solutions/](reference-solutions/) | Complete solutions (spoilers!) |
 | [materials/](materials/) | Books, videos and guides for further study |
 
 

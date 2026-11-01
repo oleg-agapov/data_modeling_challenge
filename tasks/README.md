@@ -25,7 +25,7 @@ Tasks 01–03 build on each other: the grain and join rules from Tasks 01–02 a
 2. If a concept is new to you, read `THEORY.md` first.
 3. Think about the model **before** writing SQL: what is the grain, which tables are the spine, which are lookups?
 4. Write your SQL and run it. Save each model as a view or table so you can query it by name.
-5. Run the validation checks from the task's hints.
+5. Run the task's `checks.sql` (Tasks 01–03) and the validation checks from the hints.
 6. Fill in `SOLUTION.md`: your conceptual, logical and physical model, plus assumptions and trade-offs.
 
 The hints in `TASK.md` are collapsed. Try the task on your own first, and open a hint only when you're stuck. The later hints get very specific, down to the exact output columns.

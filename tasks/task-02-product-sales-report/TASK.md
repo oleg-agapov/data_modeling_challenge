@@ -6,7 +6,7 @@ The merchandising team needs to understand how each product is selling. They wan
 
 ## Goal
 
-Build a **product-level sales report** with one row per product. All sales metrics should reflect only non-cancelled orders.
+Build a **product-level sales report** named `rpt_product_sales`, with one row per product. All sales metrics should reflect only non-cancelled orders.
 
 In this exercise you should use the **following files**:
 
@@ -23,6 +23,18 @@ Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 3. **Physical layer** — provide the SQL that builds the model. A plain `SELECT` is fine; `CREATE VIEW` or `CREATE TABLE AS SELECT` are also welcome if you want to persist the model.
 
 You are free to enrich your solution with anything that helps communicate your thinking: diagrams (e.g. [Excalidraw](https://excalidraw.com/), [DrawDB](https://www.drawdb.app)), links, screenshots, or extra explanation. There is no strict format — clarity and correctness matter most.
+
+## Check your solution
+
+When your model is built, run the automatic checks from the repository root, in the same database:
+
+```sql
+.read tasks/task-02-product-sales-report/checks.sql
+```
+
+(In the browser or another SQL tool, open [`checks.sql`](checks.sql), copy it, and run it.) The checks look for a model named `rpt_product_sales` with the column names from the hints. Every row should say `PASS`; a `FAIL` row shows the expected and actual values, so you can find the bug.
+
+When everything passes, compare your reasoning with the [reference solution](../../reference-solutions/task-02-product-sales-report/SOLUTION.md). Try the task on your own first!
 
 ## Hints
 

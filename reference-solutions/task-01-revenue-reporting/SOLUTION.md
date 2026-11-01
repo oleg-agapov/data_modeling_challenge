@@ -1,4 +1,4 @@
-# Solution 01 – Revenue Reporting
+# Reference solution 01 – Revenue Reporting
 
 ## Conceptual Layer
 
@@ -70,7 +70,11 @@ One row per order. Here's what I want in the final table:
 
 ### `fct_orders`
 
+I'm saving the model as a view, so I can query it by name in the validation queries (and so `checks.sql` can find it).
+
 ```sql
+CREATE OR REPLACE VIEW fct_orders AS
+
 -- Aggregate order_items first so we don't get duplicate order rows
 WITH order_aggregates AS (
     SELECT
@@ -90,54 +94,48 @@ SELECT
     COALESCE(oa.total_items, 0)   AS total_items,
     COALESCE(oa.gross_revenue, 0) AS gross_revenue
 FROM orders o
-LEFT JOIN order_aggregates oa ON oa.order_id = o.order_id
-ORDER BY o.order_date;
+LEFT JOIN order_aggregates oa ON oa.order_id = o.order_id;
 ```
 
 ### Validation queries
 
 ```sql
 -- 1. Make sure there's one row per order (no fan-out)
-SELECT COUNT(*) AS total_rows, COUNT(DISTINCT order_id) AS distinct_orders
+SELECT
+    COUNT(*)                 AS total_rows,
+    COUNT(DISTINCT order_id) AS distinct_orders,
+    (SELECT COUNT(*) FROM orders) AS source_orders
 FROM fct_orders;
 
--- 2. Top-level business metrics
+-- 2. Revenue reconciles with the source
+SELECT
+    (SELECT SUM(gross_revenue) FROM fct_orders) AS model_revenue,
+    (SELECT SUM(line_total) FROM order_items)   AS source_revenue;
+
+-- 3. Top-level business metrics
 SELECT
     COUNT(order_id)                                        AS order_count,
     SUM(gross_revenue)                                     AS total_gross_revenue,
     ROUND(SUM(gross_revenue) / COUNT(order_id), 2)         AS aov,
     ROUND(SUM(gross_revenue) / COUNT(DISTINCT user_id), 2) AS arpu
-FROM (
-    SELECT
-        o.order_id,
-        o.user_id,
-        COALESCE(oa.gross_revenue, 0) AS gross_revenue
-    FROM orders o
-    LEFT JOIN (
-        SELECT order_id, SUM(line_total) AS gross_revenue
-        FROM order_items
-        GROUP BY order_id
-    ) oa ON oa.order_id = o.order_id
-) fct;
+FROM fct_orders;
 
--- 3. Revenue split by status
+-- 4. Orders and revenue split by status
 SELECT
     order_status,
-    COUNT(order_id)                                                          AS order_count,
-    ROUND(SUM(gross_revenue), 2)                                             AS revenue,
-    ROUND(SUM(gross_revenue) / SUM(SUM(gross_revenue)) OVER () * 100, 1)    AS revenue_pct
-FROM (
-    SELECT
-        o.order_id,
-        o.order_status,
-        COALESCE(oa.gross_revenue, 0) AS gross_revenue
-    FROM orders o
-    LEFT JOIN (
-        SELECT order_id, SUM(line_total) AS gross_revenue
-        FROM order_items
-        GROUP BY order_id
-    ) oa ON oa.order_id = o.order_id
-) fct
+    COUNT(order_id)                                                       AS order_count,
+    ROUND(SUM(gross_revenue), 2)                                          AS revenue,
+    ROUND(SUM(gross_revenue) / SUM(SUM(gross_revenue)) OVER () * 100, 1)  AS revenue_pct
+FROM fct_orders
 GROUP BY order_status
 ORDER BY revenue DESC;
 ```
+
+Results I got:
+
+- 1,918 rows and 1,918 distinct orders, the same as the source. No fan-out.
+- Revenue 838,870.67 in both the model and the source.
+- AOV 437.37, ARPU 474.74 (1,767 users have orders).
+- The four statuses are roughly balanced: shipped 26.4% of revenue, pending 25.3%, cancelled 24.8%, delivered 23.5%.
+
+Finally, I ran [`checks.sql`](../../tasks/task-01-revenue-reporting/checks.sql) and all checks passed.
