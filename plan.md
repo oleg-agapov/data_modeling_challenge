@@ -116,7 +116,12 @@ theory and example solution still use the **old** names.
 - Every user has exactly one `user_sign_up` event and its timestamp **equals `users.created_at`**.
 - There is **no purchase event**; purchases only exist in `orders`. `additional_details` is always empty.
 - 1,767 users have orders. **Every buyer has an add_to_cart event**, every purchased (user, product) pair was carted, and every order happens within 1 hour after an add_to_cart event.
-- **Timestamp ties:** 12,488 (user, timestamp) pairs have more than one event (e.g. sign-up + first catalog view) → sessionization ordering needs a tie-breaker.
+- **Timestamp ties:** 12,488 (user, timestamp) pairs have more than one event. At sign-up, the `user_sign_up` event and up to 9 `/catalog` views share the exact same timestamp. An `event_id` tie-breaker makes ordering deterministic but not meaningful (random UUIDs, so sign-up may sort after catalog views).
+- **One short visit per user (found in Step 1):** all of a user's events fall within ≤ ~12 minutes of sign-up (median span ~2 min); consecutive events are never more than **60 seconds** apart. Orders are placed 1.5–9 minutes after sign-up. Consequences:
+  - A 30-minute sessionization rule yields **exactly one session per user** (12,483 sessions). Sessionization cannot be meaningfully showcased (Task 06 Part B, and its "converted within 24h" stretch).
+  - `days_to_first_purchase` (Task 05) is always 0; the cohort-maturity caveat is moot.
+- **Add-to-cart not linked to views:** 2,217 add-to-cart events are for a product the user never viewed; 3,336 more come before the first view of that product.
+- **Funnel coverage:** signed up 12,483 → viewed product 12,330 → added to cart 5,559 → viewed `/checkout` 2,171 → ordered 1,767.
 - **File sizes:** `user_events.csv` 27 MB, everything else < 2 MB → loading from `raw.githubusercontent.com` in the browser DuckDB shell is feasible.
 - **Types:** auto-detection gives `DOUBLE` for money; setup should cast to `DECIMAL(12,2)`.
 - **Dialect:** theory snippets like `EXTRACT(EPOCH FROM (ts1 - ts2)) / 60` and `DATE_TRUNC` work in DuckDB.
@@ -130,7 +135,9 @@ theory and example solution still use the **old** names.
 | Degenerate dims, junk dimension (`order_status × payment_method`, 12 combos) | Role-playing dates (only one real order date) |
 | Conformed dims across order and event facts (bus matrix) | Late-arriving data |
 | Factless fact (product views) | Data-quality exercises (data is clean) |
-| Funnels, cohorts, sessionization, anti-joins | International / multi-country analysis |
+| Funnels, cohorts (registration month), anti-joins, event enrichment | International / multi-country analysis |
+| | **Sessionization** (one visit per user, max gap 60 s) |
+| | Time-to-convert in days (everything happens within minutes) |
 
 ## 5. Problems found in the repository
 
@@ -168,7 +175,7 @@ theory and example solution still use the **old** names.
 
 Each step = one commit. Owner is Claude unless marked **(author)**.
 
-- [ ] **Step 1 — Fix dataset docs** (`data/ecommerce.md`, `data/README.md`)
+- [x] **Step 1 — Fix dataset docs** (done) (`data/ecommerce.md`, `data/README.md`)
   - Real column names (4.1), real row counts (4.2), correct semantics (4.3): discount is a rate + correct `line_total` formula; locations = user address, 1:1, US-only; `updated_at = order_date`; no purchase event, `/checkout` is a page view; sign-up event = `created_at`.
   - Add a "Known quirks" section: 166 `unit_price` ≠ catalog price; 317 duplicate emails.
   - Done when: every statement matches a query against the CSVs.
@@ -209,7 +216,9 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
 - [ ] **Step 8 — Tasks 04 / 05 / 06 fixes**
   - 04: make sure cross-references about where SCD2 is introduced are consistent with Task 03.
   - 05: replace the unfinished snippet with a working pattern (total in a CTE, or `MAX(users_reached) OVER ()`); mention that every buyer added to cart in this dataset.
+  - 05: `days_to_first_purchase` is always 0 → switch to minutes or drop it; drop the cohort-maturity caveat or mark it as general theory.
   - 06: add tie-breaker `ORDER BY event_timestamp, event_id` to `LAG` / running-sum examples, and explain why ties exist.
+  - 06: **DECISION NEEDED (author):** sessionization yields one session per user. Per the technique rule, options are (a) drop Part B and the 24h-conversion stretch, keeping Parts A (enriched events) and C (cart abandonment); (b) keep Part B as a "prove it" exercise where the learner discovers and documents that each user has one session; (c) defer Task 06 until the generator produces multi-visit data.
   - Done when: theory snippets for 05/06 run against the `setup.sql` tables.
 
 - [ ] **Step 9 — Coherent READMEs** (`README.md`, `tasks/README.md`, `materials/README.md`)
