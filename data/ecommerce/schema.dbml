@@ -1,66 +1,86 @@
 // E-commerce source data schema
-// Generated from data/ecommerce/ CSV files
+// Matches the CSV files in data/ecommerce/. Full documentation: data/ecommerce.md
+// Paste into https://dbdiagram.io to view the diagram.
 
 Project ecommerce {
-  database_type: 'CSV / Data Warehouse'
-  Note: 'Raw source tables for the e-commerce data modeling challenge'
+  database_type: 'DuckDB'
+  Note: 'Raw source tables for the data modeling challenge (synthetic furniture store, US only, 2024-03-15 to 2026-03-15)'
 }
 
 Table users {
-  id         text [pk, note: 'UUID – unique user identifier']
-  firstName  text [note: 'User first name']
-  lastName   text [note: 'User last name']
-  email      text [note: 'User email address']
-  created_on timestamp [note: 'Account creation timestamp']
-  loc_id     text [ref: > locations.id, note: 'FK → locations.id (user default shipping location)']
-}
+  user_id     text      [pk, note: 'UUID, unique user identifier']
+  first_name  text      [note: 'First name']
+  last_name   text      [note: 'Last name']
+  email       text      [note: 'Email address; NOT unique (317 duplicates)']
+  created_at  timestamp [note: 'Account creation (sign-up) time']
+  location_id text      [note: 'FK to locations.location_id; one address per user']
 
-Table products {
-  id          text   [pk, note: 'UUID – unique product identifier']
-  name        text   [note: 'Product display name']
-  category    text   [note: 'Product category (Living Room, Bedroom, Kitchen)']
-  description text      [note: 'Human-readable product description']
-  price       decimal   [note: 'Catalog / base price']
-  dimensions  text   [note: 'Free-text dimensions, e.g. "180 x 90 x 75"']
-  material    text   [note: 'Main materials used']
-  stock       integer   [note: 'Available inventory quantity at extraction time']
+  Note: '12,483 rows. One row per registered user.'
 }
 
 Table locations {
-  id          text [pk, note: 'UUID – unique location identifier']
-  code        text [note: 'Country code (observed: US)']
-  fullName    text [note: 'Country full name']
-  city        text [note: 'City name']
-  address     text [note: 'Street address line']
-  zip_code    text [note: 'Postal / ZIP code (stored as string to preserve leading zeros)']
-  stateRegion text [note: 'State or region name']
+  location_id       text [pk, note: 'UUID, unique address identifier']
+  country_code      text [note: 'Always US']
+  country_full_name text [note: 'Always United States']
+  city              text [note: 'City']
+  address           text [note: 'Street address line']
+  zip_code          text [note: '5-digit ZIP code; keep as text (leading zeros)']
+  state             text [note: 'US state name']
+
+  Note: '12,483 rows. One row per address; each address belongs to exactly one user.'
+}
+
+Table products {
+  id          text    [pk, note: 'UUID, unique product identifier (last column in the CSV)']
+  name        text    [note: 'Product name']
+  category    text    [note: 'Living Room, Bedroom or Kitchen']
+  description text    [note: 'Marketing description']
+  price       decimal [note: 'Current catalog price']
+  dimensions  text    [note: 'Free text, width x depth x height in cm, e.g. "220 x 90 x 75"']
+  material    text    [note: 'Main material']
+  stock       integer [note: 'Units in stock at export time (snapshot)']
+
+  Note: '21 rows. One row per product.'
 }
 
 Table orders {
-  id             text   [pk, note: 'UUID – unique order identifier']
-  user_id        text   [ref: > users.id, note: 'FK → users.id']
-  date_ordered   timestamp [note: 'Order placement timestamp']
-  status         text   [note: 'Order status (pending, shipped, delivered, cancelled)']
-  payment_method text   [note: 'Payment channel (credit card, bank transfer, paypal)']
-  updated        timestamp [note: 'Last record update timestamp']
+  order_id       text      [pk, note: 'UUID, unique order identifier']
+  user_id        text      [note: 'FK to users.user_id']
+  order_date     timestamp [note: 'When the order was placed']
+  order_status   text      [note: 'pending, shipped, delivered or cancelled (current status only)']
+  payment_method text      [note: 'paypal, bank transfer or credit card']
+  updated_at     timestamp [note: 'Last update time; always equal to order_date']
+
+  Note: '1,918 rows. One row per order.'
 }
 
 Table order_items {
-  id         text [pk, note: 'UUID – unique order line identifier']
-  order_id   text [ref: > orders.id, note: 'FK → orders.id']
-  product_id text [ref: > products.id, note: 'FK → products.id']
-  quantity   integer [note: 'Quantity purchased for this line']
-  unit_price decimal [note: 'Per-unit selling price captured at purchase time']
-  discount   decimal [default: 0, note: 'Discount amount applied at line level']
-  line_total decimal [note: 'Extended line amount (quantity * unit_price - discount)']
+  order_item_id text    [pk, note: 'UUID, unique order line identifier']
+  order_id      text    [note: 'FK to orders.order_id']
+  product_id    text    [note: 'FK to products.id']
+  quantity      integer [note: 'Units bought; always 1']
+  unit_price    decimal [note: 'Price per unit charged on this order']
+  discount      decimal [note: 'Discount RATE: 0, 0.1, 0.15 or 0.2']
+  line_total    decimal [note: 'quantity * unit_price * (1 - discount)']
+
+  Note: '2,092 rows. One row per product line in an order.'
 }
 
 Table user_events {
-  event_id           text   [pk, note: 'UUID – unique event identifier']
-  user_id            text   [ref: > users.id, note: 'FK → users.id']
-  event_type         text   [note: 'Event type (user_sign_up, page_view, add_to_cart)']
-  event_timestamp    timestamp [note: 'Event occurrence timestamp']
-  page_url           text   [note: 'URL / path where the event occurred']
-  product_id         text   [null, ref: > products.id, note: 'FK → products.id; nullable, populated for product-related events only']
-  additional_details text      [null, note: 'Extra event metadata; currently empty in all records']
+  event_id           text      [pk, note: 'UUID, unique event identifier']
+  user_id            text      [note: 'FK to users.user_id']
+  event_type         text      [note: 'user_sign_up, page_view or add_to_cart']
+  event_timestamp    timestamp [note: 'When the event happened; not unique per user']
+  page_url           text      [note: '/signup, /catalog, /product, /checkout, /about_us, /product/add_to_cart']
+  product_id         text      [null, note: 'FK to products.id; set only for product views and add_to_cart']
+  additional_details text      [null, note: 'Always empty']
+
+  Note: '191,157 rows. One row per tracked website event.'
 }
+
+Ref: users.location_id - locations.location_id
+Ref: orders.user_id > users.user_id
+Ref: order_items.order_id > orders.order_id
+Ref: order_items.product_id > products.id
+Ref: user_events.user_id > users.user_id
+Ref: user_events.product_id > products.id
