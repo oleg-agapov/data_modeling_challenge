@@ -213,7 +213,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Fix "fact tables tend to be wide" → narrow and long.
   - Done when: diagram, hints and theory consistently show 3 dims (+ optional junk dim).
 
-- [ ] **Step 8 — Tasks 04 / 05 / 06 fixes**
+- [x] **Step 8 — Tasks 04 / 05 / 06 fixes** (done. 04: business questions moved from a hint into the Goal, no-dataset note, "semi-additive" wording fixed. 05: `minutes_to_first_purchase`, working `pct_of_registered` snippet, LEFT JOIN + WHERE pitfall, nested-funnel and cohort-maturity notes; verified funnel 12,483 → 12,330 → 5,559 → 1,363. 06: renamed to `task-06-cart-abandonment` "Event Enrichment & Cart Abandonment" ⭐⭐, Parts A/B only, new stretch = product abandonment rate; theory on denormalization rules, anti-joins, ratio and distinct-count additivity, short note on sessions; verified enriched_events 191,157 rows, cart_abandonment 6,455 pairs. **(author)** Task 06 cover image shows sessions — regenerate)
   - 04: make sure cross-references about where SCD2 is introduced are consistent with Task 03.
   - 05: replace the unfinished snippet with a working pattern (total in a CTE, or `MAX(users_reached) OVER ()`); mention that every buyer added to cart in this dataset.
   - 05: `days_to_first_purchase` is always 0 → switch to minutes or drop it; drop the cohort-maturity caveat or mark it as general theory.

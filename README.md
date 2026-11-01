@@ -33,7 +33,7 @@ There are six tasks available to solve:
 | 03 | [Star Schema Design](tasks/task-03-star-schema/) | ⭐️⭐️ | Dimensional Modeling |
 | 04 | [Hotel Booking Data Marts](tasks/task-04-hotel-booking-marts/) | ⭐️⭐️ | Theoretical / Design-only |
 | 05 | [User Conversion Funnel](tasks/task-05-conversion-funnel/) | ⭐️⭐️⭐️ | Window Functions + Funnel |
-| 06 | [Sessionization & Cart Abandonment](tasks/task-06-sessionization/) | ⭐️⭐️⭐️ | Advanced Window Functions |
+| 06 | [Event Enrichment & Cart Abandonment](tasks/task-06-cart-abandonment/) | ⭐️⭐️ | Behavioral modeling |
 
 It should be possible to solve challenges in any order.
 

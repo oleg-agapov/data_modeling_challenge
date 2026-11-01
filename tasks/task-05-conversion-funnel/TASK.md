@@ -2,7 +2,7 @@
 
 ## Context
 
-The product analytics team wants to measure how effectively the platform converts visitors into buyers. They track three key behavioral milestones before a purchase: signing up, viewing a product page, and adding an item to the cart. Mapping the drop-off between each stage reveals where to focus optimisation effort.
+The product analytics team wants to measure how effectively the platform converts newly registered users into buyers. They track three key behavioral milestones before a purchase: signing up, viewing a product page, and adding an item to the cart. Mapping the drop-off between each stage reveals where to focus optimisation effort.
 
 
 ## Goal
@@ -42,12 +42,13 @@ Produce one row per user with the following columns:
 | `did_add_to_cart` | boolean/int | User has at least one `add_to_cart` event |
 | `did_purchase` | boolean/int | User has at least one non-cancelled order in `orders` |
 | `first_purchase_at` | datetime | Timestamp of the user's earliest non-cancelled order, or `NULL` |
-| `days_to_first_purchase` | integer | Days between `registered_at` and `first_purchase_at`, or `NULL` |
+| `minutes_to_first_purchase` | integer | Whole minutes between `registered_at` and `first_purchase_at`, or `NULL` |
 
 Requirements:
 - Start from `users` so that every registered user appears, even those with no events and no orders.
 - Join `user_events` with `LEFT JOIN`; aggregate events before joining to avoid row explosion.
-- Join `orders` with `LEFT JOIN` filtered to non-cancelled orders.
+- Join `orders` with `LEFT JOIN` filtered to non-cancelled orders. Put the filter in a pre-aggregated CTE (or in the `ON` clause), not in the final `WHERE`: a `WHERE` on the right-hand table silently turns the `LEFT JOIN` into an `INNER JOIN` and drops users who never ordered.
+- In this dataset every user has a single short visit, and buyers order within about 10 minutes of signing up. That's why the time metric is in minutes, not days (see the [dataset docs](../../data/ecommerce.md#user_eventscsv)).
 
 </details>
 
