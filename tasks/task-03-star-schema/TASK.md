@@ -6,15 +6,15 @@ The BI team is migrating the e-commerce data into an analytics warehouse. The ra
 
 ## Goal
 
-Design and populate a **star schema** centred on order line items (the most granular transactional grain), with four dimension tables.
+Design and populate a **star schema** centred on order line items (the most granular transactional grain), with three dimension tables: date, customer and product.
 
 In this exercise you should use the **following files**:
 
 - `data/ecommerce/orders.csv`
 - `data/ecommerce/order_items.csv`
 - `data/ecommerce/users.csv`
-- `data/ecommerce/products.csv`
 - `data/ecommerce/locations.csv`
+- `data/ecommerce/products.csv`
 
 ## Deliverables
 
@@ -34,18 +34,16 @@ Hint 1. Target schema
 </summary>
 
 ```
-                   ┌─────────────┐
-                   │  dim_date   │
-                   └──────┬──────┘
-                          │
-┌──────────────┐   ┌──────▼──────────┐   ┌────────────────┐
-│ dim_customer │◄──┤ fact_order_items ├──►│  dim_product   │
-└──────────────┘   └──────┬──────────┘   └────────────────┘
-                          │
-                   ┌──────▼──────┐
-                   │ dim_location│
-                   └─────────────┘
+                 ┌─────────────┐
+                 │  dim_date   │
+                 └──────▲──────┘
+                        │
+┌──────────────┐  ┌─────┴───────────┐  ┌─────────────┐
+│ dim_customer │◄─┤ fct_order_items ├─►│ dim_product │
+└──────────────┘  └─────────────────┘  └─────────────┘
 ```
+
+There are five source tables but only three dimensions. `locations` has exactly one row per user, so the address is an **attribute of the customer**, not a separate dimension. The theory file explains why.
 
 </details>
 
@@ -56,33 +54,37 @@ Hint 2. Dimension table specifications
 </summary>
 
 ### `dim_date`
-One row per calendar date covering the full range of `orders.order_date`.
+One row per calendar date, covering every day from the first to the last `orders.order_date`, including days without orders.
 
 | Column | Type | Notes |
 |---|---|---|
-| `date_key` | integer | Surrogate key in `YYYYMMDD` format |
+| `date_key` | integer | Surrogate key in `YYYYMMDD` format, e.g. `20240315` |
 | `full_date` | date | The calendar date |
 | `year` | integer | |
 | `quarter` | integer | 1–4 |
 | `month` | integer | 1–12 |
 | `month_name` | string | |
-| `week_of_year` | integer | |
+| `week_of_year` | integer | ISO week |
 | `day_of_week` | integer | 1 = Monday … 7 = Sunday |
 | `day_name` | string | |
 | `is_weekend` | boolean | |
 
 ### `dim_customer`
-One row per user; treat as a **Type 1 SCD** (overwrite on change, no history).
+One row per user, including the user's address. Treat it as a **Type 1 SCD** (overwrite on change, no history).
 
 | Column | Notes |
 |---|---|
-| `customer_key` | Integer surrogate key (auto-increment / row_number) |
+| `customer_key` | Integer surrogate key |
 | `customer_id` | Natural key from `users.user_id` |
 | `first_name` | |
 | `last_name` | |
 | `email` | |
 | `registered_at` | `users.created_at` |
 | `registration_month` | `DATE_TRUNC('month', created_at)` |
+| `city` | From `locations`, joined on `users.location_id` |
+| `state` | From `locations` |
+| `zip_code` | From `locations` |
+| `country_code` | From `locations` (always `US` in this dataset) |
 
 ### `dim_product`
 
@@ -95,17 +97,6 @@ One row per user; treat as a **Type 1 SCD** (overwrite on change, no history).
 | `material` | |
 | `current_catalog_price` | `products.price` as of load time |
 
-### `dim_location`
-
-| Column | Notes |
-|---|---|
-| `location_key` | Integer surrogate key |
-| `location_id` | Natural key from `locations.location_id` |
-| `city` | |
-| `state` | `state` |
-| `zip_code` | |
-| `country_code` | `country_code` |
-
 </details>
 
 
@@ -114,7 +105,7 @@ One row per user; treat as a **Type 1 SCD** (overwrite on change, no history).
 Hint 3. Fact table specification
 </summary>
 
-### `fact_order_items`
+### `fct_order_items`
 
 Grain: one row per order line item.
 
@@ -123,16 +114,15 @@ Grain: one row per order line item.
 | `order_item_key` | integer | Surrogate PK |
 | `order_item_id` | UUID | Natural key from `order_items.order_item_id` |
 | `order_id` | UUID | Degenerate dimension (kept for drill-through) |
-| `order_status` | string | Denormalized from `orders.order_status` |
-| `payment_method` | string | Denormalized from `orders.payment_method` |
+| `order_status` | string | Degenerate dimension, from `orders.order_status` |
+| `payment_method` | string | Degenerate dimension, from `orders.payment_method` |
 | `date_key` | integer | FK → `dim_date.date_key` (from `orders.order_date`) |
-| `customer_key` | integer | FK → `dim_customer.customer_key` |
+| `customer_key` | integer | FK → `dim_customer.customer_key` (via `orders.user_id`) |
 | `product_key` | integer | FK → `dim_product.product_key` |
-| `location_key` | integer | FK → `dim_location.location_key` (via `orders.user_id` → `users.location_id`) |
 | `quantity` | integer | |
-| `unit_price` | numeric(12,2) | Transaction price snapshot |
-| `discount` | numeric(12,2) | |
-| `line_total` | numeric(12,2) | |
+| `unit_price` | numeric(12,2) | Price charged per unit |
+| `discount` | numeric(4,2) | Discount **rate** (e.g. `0.15`), not an amount |
+| `line_total` | numeric(12,2) | Amount charged for the line |
 
 </details>
 
@@ -142,16 +132,18 @@ Grain: one row per order line item.
 Hint 4. Requirements and validation
 </summary>
 
-1. Generate integer surrogate keys using `ROW_NUMBER() OVER ()` or equivalent — do **not** reuse the source UUIDs as dimension PKs.
+1. Generate integer surrogate keys with a **deterministic** order, for example `ROW_NUMBER() OVER (ORDER BY customer_id)`. Do **not** use `ROW_NUMBER() OVER ()` without an `ORDER BY` (the numbering can change every time you rebuild), and do **not** reuse the source UUIDs as dimension keys.
 2. All dimension lookups in the fact table must use surrogate keys, not natural keys.
-3. Every foreign key in `fact_order_items` must resolve — no orphan keys (validate with anti-join checks).
+3. Every foreign key in `fct_order_items` must resolve — no orphan keys (validate with anti-join checks).
 4. Monetary columns must be typed as `NUMERIC(12,2)`.
+5. To build the date spine for `dim_date`, generate one row per day between the first and last order date. In DuckDB: `SELECT * FROM generate_series(DATE '2024-01-01', DATE '2024-12-31', INTERVAL 1 DAY)` (replace the dates with the real range). It returns timestamps, so cast each value with `::DATE`.
 
 After building the schema, write queries to verify:
 
-1. Row count of `fact_order_items` equals row count of `order_items.csv`.
-2. `SUM(fact_order_items.line_total)` matches `SUM(order_items.line_total)` from the source.
-3. No `NULL` foreign keys exist in any FK column of `fact_order_items`.
+1. Row count of `fct_order_items` equals row count of `order_items`.
+2. `SUM(fct_order_items.line_total)` matches `SUM(order_items.line_total)` from the source.
+3. No `NULL` foreign keys exist in any FK column of `fct_order_items`.
+4. Each dimension has exactly one row per natural key (`dim_customer` per `customer_id`, `dim_product` per `product_id`, `dim_date` per `full_date`).
 
 </details>
 
@@ -161,6 +153,10 @@ After building the schema, write queries to verify:
 Hint 5. Stretch goal
 </summary>
 
-Promote `dim_customer` to a **Type 2 SCD**: add `valid_from`, `valid_to`, and `is_current` columns, and simulate a single fictitious change to five users' email addresses to demonstrate the versioning logic.
+`order_status` and `payment_method` are two low-cardinality text flags that sit on every fact row. Replace them with a **junk dimension**:
+
+- Build `dim_order_profile` with one row per combination of `order_status` × `payment_method` (4 × 3 = 12 rows) and an integer `order_profile_key`.
+- Replace the two text columns in `fct_order_items` with `order_profile_key`.
+- In your solution, discuss the trade-off: what do you gain, and what becomes less convenient for someone querying the fact table?
 
 </details>

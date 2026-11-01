@@ -206,7 +206,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Note that all products have sales in this dataset; LEFT JOIN is still the correct, future-proof pattern.
   - Done when: every spec column is computable and meaningful.
 
-- [ ] **Step 7 — Task 03 fixes** (`task-03/TASK.md`, `THEORY.md`, optionally `image.png`)
+- [x] **Step 7 — Task 03 fixes** (done; fact renamed to `fct_order_items`; added theory on "not every source table becomes a dimension", stable vs hash keys, address as Type 1, junk dimensions; fixed "degenerate dims never grouped". Verified reference build: fct 2,092 rows, revenue 838,870.67, dim_date 730, dim_customer 12,483, dim_product 21, dim_order_profile 12, no NULL/orphan FKs. Draft SQL kept for Step 10. **(author)** cover image `assets/image.png` shows dim_users/dim_orders×2 and doesn't match the spec — redraw or replace) (`task-03/TASK.md`, `THEORY.md`, optionally `image.png`)
   - Remove `dim_location`; fold `city`, `state`, `zip_code` into `dim_customer`. Add a theory paragraph on why a 1:1 table becomes attributes, not a dimension.
   - Stable surrogate keys: `ROW_NUMBER() OVER (ORDER BY <natural_key>)` (or a hash) + a line on why `OVER ()` is risky.
   - Replace the SCD2 stretch with a junk dimension `dim_order_profile` (`order_status × payment_method`, 12 rows).
