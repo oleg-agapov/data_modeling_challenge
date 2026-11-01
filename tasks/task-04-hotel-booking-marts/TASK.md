@@ -16,7 +16,7 @@ Design a **conceptual + logical data mart model** for a hotel booking analytics 
 
 ## Deliverables
 
-Fill in the `SOLUTION.MD` file in this directory. It must cover three sections:
+Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 
 1. **Conceptual layer** — describe the business entities, their relationships, and the grain of the output model in plain language.
 2. **Logical layer** — define the fact and dimension tables with columns, data types, and keys; explain how each source table maps to the proposed model.

@@ -18,7 +18,7 @@ In this exercise you should use the **following files**:
 
 ## Deliverables
 
-Fill in the `SOLUTION.MD` file in this directory. It must cover three sections:
+Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 
 1. **Conceptual layer** — describe the star schema structure: identify the central fact, the dimensions, and the grain of the fact table in plain language.
 2. **Logical layer** — define all dimension and fact tables with columns, data types, and keys; explain how source tables are mapped to each model.

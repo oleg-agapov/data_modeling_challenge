@@ -17,7 +17,7 @@ In this exercise you should use the **following files**:
 
 ## Deliverables
 
-Fill in the `SOLUTION.MD` file in this directory. It must cover three sections:
+Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 
 1. **Conceptual layer** — describe the business entities, the funnel milestones, and the grain of each output model in plain language.
 2. **Logical layer** — define the tables, columns, data types, and keys involved; explain how the source tables are transformed into the output models.

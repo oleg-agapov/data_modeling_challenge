@@ -22,7 +22,7 @@ In this exercise you should use the **following files**:
 
 ## Deliverables
 
-Fill in the `SOLUTION.MD` file in this directory. It must cover three sections:
+Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 
 1. **Conceptual layer** — describe the events, sessions, and purchase-linkage concepts; explain the grain of each output model in plain language.
 2. **Logical layer** — define the tables, columns, data types, and keys involved; explain how raw events are transformed into sessions and linked to purchases.

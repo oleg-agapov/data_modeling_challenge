@@ -184,7 +184,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Update DBML to real names. **(author)** re-export `erd.png` from dbdiagram.io.
   - Done when: DBML imports cleanly and matches CSV headers.
 
-- [ ] **Step 3 — File naming & links**
+- [x] **Step 3 — File naming & links** (done; also moved all task images to `assets/` and turned the task README link lines into lists)
   - Rename `SOLUTION.MD` → `SOLUTION.md` in tasks 02–06; fix links in each `README.md` / `TASK.md`.
   - Optional: move task images into `assets/` everywhere for consistency.
   - Done when: a link checker finds no broken relative links.
