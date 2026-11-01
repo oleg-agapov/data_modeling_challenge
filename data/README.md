@@ -13,4 +13,6 @@ All tasks that use real data work with one dataset: an **e-commerce store** sell
 
 Read the full documentation before starting a task: [ecommerce.md](ecommerce.md). It explains every column, the relationships between tables, and a few known quirks of the data.
 
+To load the files into a database, follow [GETTING_STARTED.md](../GETTING_STARTED.md).
+
 The schema is also available as an [ERD image](ecommerce/erd.png) and as [DBML](ecommerce/schema.dbml).

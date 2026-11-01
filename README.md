@@ -12,6 +12,10 @@ This repository is a self-contained challenge: it includes source data, task pro
 - Building fact/dimension thinking for transactional and event data
 - Documenting assumptions, trade-offs, and modeling decisions
 
+## Getting started
+
+Follow [GETTING_STARTED.md](GETTING_STARTED.md) to load the dataset into DuckDB (in your browser, on your computer, or from Python) in about five minutes.
+
 ## Repository structure
 
 - [data/](data/) — source datasets and dataset documentation

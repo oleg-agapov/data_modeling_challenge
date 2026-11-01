@@ -118,7 +118,7 @@ Only the current status is stored. There is no status history, and no shipping o
 | `quantity` | integer | Units bought. Always `1` in this dataset. |
 | `unit_price` | decimal | Price per unit charged on this order. See [Known quirks](#known-quirks). |
 | `discount` | decimal | Discount **rate** applied to the line, not an amount: `0` (1,696 lines), `0.1`, `0.15` or `0.2`. |
-| `line_total` | decimal | Amount charged for the line: `quantity * unit_price * (1 - discount)`. |
+| `line_total` | decimal | Amount charged for the line: `quantity * unit_price * (1 - discount)`, rounded to 2 decimals. |
 
 Most orders have a single line: 1,760 orders have 1 line, 142 have 2, and 16 have 3. Every order has at least one line, and every product has been sold at least once.
 

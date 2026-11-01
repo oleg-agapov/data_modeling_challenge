@@ -194,7 +194,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Fix Task 01 theory: `users.payment_method` → `orders.payment_method`.
   - Done when: grep finds no old names (`date_ordered`, `created_on`, `loc_id`, `stateRegion`, `fullName`, `orders.id`, `users.id`, `order_items.id`, `locations.id`, bare `status` for orders).
 
-- [ ] **Step 5 — Getting started** (new `GETTING_STARTED.md`, new `setup.sql`)
+- [x] **Step 5 — Getting started** (done; verified locally with DuckDB 2.0 Python and CLI v1.4.1, and the remote GitHub variant with DuckDB-WASM v1.1.1 in headless Chromium) (new `GETTING_STARTED.md`, new `setup.sql`)
   - Three paths: (a) zero-install shell.duckdb.org reading CSVs from `raw.githubusercontent.com`; (b) DuckDB CLI / `duckdb -ui`; (c) Python `pip install duckdb`.
   - `setup.sql` creates all six tables with explicit types (`DECIMAL(12,2)` money, `TIMESTAMP` dates).
   - Dialect note ("examples are DuckDB SQL; minor changes needed elsewhere") + a "verify setup" row-count query.
