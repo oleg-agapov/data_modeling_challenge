@@ -180,7 +180,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Add a "Known quirks" section: 166 `unit_price` ≠ catalog price; 317 duplicate emails.
   - Done when: every statement matches a query against the CSVs.
 
-- [ ] **Step 2 — Fix schema & ERD** (`data/ecommerce/schema.dbml`, `data/ecommerce/erd.png`)
+- [x] **Step 2 — Fix schema & ERD** (done; ERD rendered from the DBML with headless Chromium, no dbdiagram export needed) (`data/ecommerce/schema.dbml`, `data/ecommerce/erd.png`)
   - Update DBML to real names. **(author)** re-export `erd.png` from dbdiagram.io.
   - Done when: DBML imports cleanly and matches CSV headers.
 
@@ -218,7 +218,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - 05: replace the unfinished snippet with a working pattern (total in a CTE, or `MAX(users_reached) OVER ()`); mention that every buyer added to cart in this dataset.
   - 05: `days_to_first_purchase` is always 0 → switch to minutes or drop it; drop the cohort-maturity caveat or mark it as general theory.
   - 06: add tie-breaker `ORDER BY event_timestamp, event_id` to `LAG` / running-sum examples, and explain why ties exist.
-  - 06: **DECISION NEEDED (author):** sessionization yields one session per user. Per the technique rule, options are (a) drop Part B and the 24h-conversion stretch, keeping Parts A (enriched events) and C (cart abandonment); (b) keep Part B as a "prove it" exercise where the learner discovers and documents that each user has one session; (c) defer Task 06 until the generator produces multi-visit data.
+  - 06: **DECIDED (a):** sessionization yields one session per user, so drop Part B (sessionization) and the 24h-conversion stretch. Keep Part A (enriched events) and Part C (cart abandonment). Rename the task (e.g. "Event Enrichment & Cart Abandonment"), update its README/TASK/THEORY/image references and the main README task table; move sessionization theory to Phase 3. The `event_id` tie-breaker note is then only needed where event order matters.
   - Done when: theory snippets for 05/06 run against the `setup.sql` tables.
 
 - [ ] **Step 9 — Coherent READMEs** (`README.md`, `tasks/README.md`, `materials/README.md`)
@@ -251,7 +251,7 @@ Estimated effort: ~6–9 hours. Steps 1–9 are mostly mechanical; Step 10 is th
 
 - [ ] **Step 14 — Triage feedback**: collect feedback issues and Discussions; tag as unclear / too hard / too easy / broken; fix top items before adding anything new.
 - [ ] **Step 15 — Hint ladder** (all `TASK.md`): reorder hints to guiding questions ("What is one row? What's the spine?") → approach → full column spec last.
-- [ ] **Step 16 — Reference solutions + checks for Tasks 04–06**: Task 04 gets a reference design doc + rubric (design-only, no `checks.sql`); Tasks 05/06 get solutions and checks (funnel stage counts, session count, abandonment rows). Mind the timestamp tie-breaker for session counts.
+- [ ] **Step 16 — Reference solutions + checks for Tasks 04–06**: Task 04 gets a reference design doc + rubric (design-only, no `checks.sql`); Tasks 05/06 get solutions and checks (funnel stage counts, enriched event row count, cart abandonment rows).
 - [ ] **Step 17 — New task: Conformed dimensions & bus matrix** (after Task 03): build `fct_product_events` (product views + add-to-carts) reusing `dim_customer`, `dim_product`, `dim_date`; draw a bus matrix; answer a cross-fact question (e.g. view-to-purchase rate by product).
 - [ ] **Step 18 — Optional small task** (pick at most one, driven by feedback): factless fact for product views, or a daily product sales aggregate as a step toward periodic snapshots.
 - [ ] **Step 19 — Materials refresh**: add Adamson, *Star Schema: The Complete Reference*; Joe Reis, *Practical Data Modeling*; tag each resource with the task(s) it supports.
@@ -259,4 +259,4 @@ Estimated effort: ~6–9 hours. Steps 1–9 are mostly mechanical; Step 10 is th
 
 ## 9. Phase 3 — later (requires changing the dataset)
 
-Only once the generator is updated: SCD2 with real attribute changes, accumulating snapshots (order status history), role-playing dates (shipped/delivered dates), late-arriving data, data-quality exercises (orphans, NULLs, duplicates), international addresses, anonymous (pre-sign-up) traffic. Also consider fixing the `unit_price` generator bug and adding the generator script to the repo.
+Only once the generator is updated: sessionization (multi-visit users with gaps > 30 min), SCD2 with real attribute changes, accumulating snapshots (order status history), role-playing dates (shipped/delivered dates), late-arriving data, data-quality exercises (orphans, NULLs, duplicates), international addresses, anonymous (pre-sign-up) traffic. Also consider fixing the `unit_price` generator bug and adding the generator script to the repo.
