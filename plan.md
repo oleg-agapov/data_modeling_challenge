@@ -238,7 +238,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
 - [x] **Step 11 — Self-review rubric** in every `TASK.md` (done; task-specific "Before you submit" checklists, 6–8 items each, placed before the hints; Task 03 reference solution now states SCD type for every dimension to match its checklist)
   - "Before you submit" checklist (5–7 items): grain stated in one sentence, assumptions listed, trade-offs explained, validation performed, etc.
 
-- [ ] **Step 12 — Community setup**
+- [x] **Step 12 — Community setup** (done on the repo side: `.github/ISSUE_TEMPLATE/task-feedback.yml` issue form + `config.yml` contact links, `CONTRIBUTING.md`, README "Share your solution" + "Feedback" sections. **(author) still to do:** enable Discussions; create categories named exactly "Show your solution" (slug `show-your-solution`) and keep the default "Q&A" (slug `q-a`) — README/CONTRIBUTING/config links depend on these slugs; create a `feedback` label so the issue form can apply it)
   - New `.github/ISSUE_TEMPLATE/task-feedback.yml` (which task, what was unclear, time spent) and a short `CONTRIBUTING.md`.
   - **(author)** Enable GitHub Discussions with "Show your solution" and "Q&A" categories.
   - Document the fork → fill `SOLUTION.md` → post link flow in the README (extend the existing "Feedback" section, which currently points to GitHub issues).

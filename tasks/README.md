@@ -30,4 +30,4 @@ Tasks 01–03 build on each other: the grain and join rules from Tasks 01–02 a
 
 The hints in `TASK.md` are collapsed. Try the task on your own first, and open a hint only when you're stuck. The later hints get very specific, down to the exact output columns.
 
-If you fork this repository, commit your filled-in `SOLUTION.md` files and SQL to your fork. That way you have a portfolio of modeling work you can show others.
+If you fork this repository, commit your filled-in `SOLUTION.md` files and SQL to your fork. That way you have a portfolio of modeling work you can show others. Share it in [Discussions → Show your solution](https://github.com/oleg-agapov/data_modeling_challenge/discussions/categories/show-your-solution) to get feedback.

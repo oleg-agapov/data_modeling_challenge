@@ -87,9 +87,23 @@ Add notes on your assumptions, design trade-offs, and the validation checks you 
 - Keep your solution practical and explainable. Prefer clarity over unnecessary complexity, and make assumptions explicit when the requirements are ambiguous.
 
 
+## Share your solution
+
+Learning works best when you show your work and get feedback on it.
+
+1. **Fork** this repository and solve the tasks in your fork.
+2. **Commit** your `SOLUTION.md` files, SQL and diagrams. Over time, your fork becomes a portfolio of modeling work.
+3. **Post a link** in [Discussions → Show your solution](https://github.com/oleg-agapov/data_modeling_challenge/discussions/categories/show-your-solution), and mention any decision you're unsure about.
+4. **Review someone else's solution.** Comparing different designs for the same problem is one of the best ways to learn modeling.
+
+Stuck on a concept? Ask in [Discussions → Q&A](https://github.com/oleg-agapov/data_modeling_challenge/discussions/categories/q-a).
+
+
 ## Feedback
 
-This is an early version, and the most useful thing you can do is tell me what didn't work: unclear instructions, a task that was too hard or too easy, a mistake in the theory, a check that fails on a correct answer. Please [open an issue](https://github.com/oleg-agapov/data_modeling_challenge/issues) on GitHub.
+This is an early version, and the most useful thing you can do is tell me what didn't work: unclear instructions, a task that was too hard or too easy, a mistake in the theory, a check that fails on a correct answer. Please use the [task feedback form](https://github.com/oleg-agapov/data_modeling_challenge/issues/new?template=task-feedback.yml). It takes two minutes.
+
+Want to fix something yourself? See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 
 ## Repository structure
@@ -102,6 +116,7 @@ This is an early version, and the most useful thing you can do is tell me what d
 | [tasks/](tasks/) | The challenge tasks |
 | [reference-solutions/](reference-solutions/) | Complete solutions (spoilers!) |
 | [materials/](materials/) | Books, videos and guides for further study |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to give feedback, share solutions and contribute fixes |
 
 
 ## License
