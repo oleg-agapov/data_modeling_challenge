@@ -38,6 +38,19 @@ When your model is built, run the automatic checks from the repository root, in 
 
 When everything passes, compare your reasoning with the [reference solution](../../reference-solutions/task-03-star-schema/SOLUTION.md). Try the task on your own first!
 
+## Before you submit
+
+Use this checklist to review your `SOLUTION.md` before you call the task done. The automatic checks test your SQL; these points cover the thinking that SQL can't show.
+
+- [ ] You state the grain of `fct_order_items` and why you chose the finest available grain.
+- [ ] Your solution includes a star schema diagram (sketch, ERD, or ASCII) with the fact in the middle.
+- [ ] For each dimension you give its grain, natural key, surrogate key, and how the surrogate key is generated.
+- [ ] You explain why `locations` became attributes of `dim_customer` instead of its own dimension.
+- [ ] You name the degenerate dimensions on the fact table and say why they don't need their own table.
+- [ ] You state the SCD type of each dimension and what it means for historical orders (for example, when a customer moves).
+- [ ] You include at least one example query that uses the star schema to answer a business question.
+- [ ] `checks.sql` passes.
+
 ## Hints
 
 <details>

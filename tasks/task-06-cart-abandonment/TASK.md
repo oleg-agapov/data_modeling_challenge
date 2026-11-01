@@ -31,6 +31,17 @@ Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 
 You are free to enrich your solution with anything that helps communicate your thinking: diagrams (e.g. [Excalidraw](https://excalidraw.com/), [DrawDB](https://www.drawdb.app)), links, screenshots, or extra explanation. There is no strict format — clarity and correctness matter most.
 
+## Before you submit
+
+Use this checklist to review your `SOLUTION.md` before you call the task done. These points cover the thinking a reviewer would look for.
+
+- [ ] You state the grain of `enriched_events` and of `cart_abandonment`.
+- [ ] `enriched_events` has exactly as many rows as `user_events`, and events without a product are still there.
+- [ ] You write down your definition of an abandoned cart, including how cancelled orders and timing are treated.
+- [ ] Each (user, product) pair appears only once in `cart_abandonment`.
+- [ ] You explain which anti-join pattern you used and why `NOT IN` is risky.
+- [ ] You explain which layer each model belongs to (enriched vs mart) and why `cart_abandonment` can be built on top of `enriched_events`.
+
 ## Hints
 
 <details>

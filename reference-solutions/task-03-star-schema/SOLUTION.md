@@ -90,6 +90,7 @@ Entities and how I treated them:
 
 - **No `dim_location`.** Users and locations are one-to-one, so a separate dimension would only add a join. If addresses were shared, or analyzed on their own, I would reconsider.
 - **Address is Type 1.** Past orders show the customer's *current* address. The data has no address history, so "revenue by state at the time of order" is not possible; I would mention this to anyone using the state for analysis.
+- **`dim_product` is Type 1 too.** A product rename or price change overwrites the old value. That's why the price column is called `current_catalog_price`: for the price actually charged, use `unit_price` and `line_total` on the fact. `dim_date` never changes, so SCD doesn't apply to it.
 - **Order status and payment method stay on the fact** as degenerate dimensions. They are simple and analysts filter by them a lot. The stretch goal shows the junk-dimension alternative.
 - **Surrogate keys** come from `ROW_NUMBER()` ordered by the natural key, so a rebuild of the same data gives the same keys. All tables are rebuilt together, so the fact always matches its dimensions.
 - **`dim_date` covers every day** between the first and last order, including days without sales, so date-based reports don't silently skip empty days.

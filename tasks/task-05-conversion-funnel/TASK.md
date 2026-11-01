@@ -25,6 +25,18 @@ Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 
 You are free to enrich your solution with anything that helps communicate your thinking: diagrams (e.g. [Excalidraw](https://excalidraw.com/), [DrawDB](https://www.drawdb.app)), links, screenshots, or extra explanation. There is no strict format — clarity and correctness matter most.
 
+## Before you submit
+
+Use this checklist to review your `SOLUTION.md` before you call the task done. These points cover the thinking a reviewer would look for.
+
+- [ ] You state the grain of both outputs: the per-user table and the stage summary.
+- [ ] Your per-user table has exactly one row per registered user (compare its row count with `users`).
+- [ ] You say what the denominator of every percentage is.
+- [ ] You explain how cancelled orders are handled when deciding whether a user purchased.
+- [ ] You explain what `NULL` means in `first_purchase_at` and `minutes_to_first_purchase`, and why it isn't `0`.
+- [ ] You check that each funnel stage is no larger than the previous one, and say what you'd do if it were.
+- [ ] Your SQL aggregates events per user before joining them to `users`.
+
 ## Hints
 
 <details>

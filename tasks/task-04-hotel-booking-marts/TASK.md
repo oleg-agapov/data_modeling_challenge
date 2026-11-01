@@ -31,6 +31,18 @@ Fill in the `SOLUTION.md` file in this directory. It must cover three sections:
 
 You are free to enrich your solution with anything that helps communicate your thinking: diagrams (e.g. [Excalidraw](https://excalidraw.com/), [DrawDB](https://www.drawdb.app)), links, screenshots, or extra explanation. There is no strict format — clarity and correctness matter most.
 
+## Before you submit
+
+Use this checklist to review your `SOLUTION.md` before you call the task done. These points cover the thinking a reviewer would look for.
+
+- [ ] Each of the four business questions is mapped to specific facts, dimensions, and measures.
+- [ ] Every relationship in your conceptual model has a cardinality and says whether it is mandatory or optional.
+- [ ] Every fact table has a one-sentence grain, and you explain what you gain or lose with that grain.
+- [ ] Every dimension has a stated SCD type (1 or 2) with a reason.
+- [ ] `is_international` has one unambiguous definition, including what happens when a guest's country is unknown.
+- [ ] You explain how cancellations are modeled and how they affect revenue and occupancy metrics.
+- [ ] You discuss at least one trade-off you made, and what you would do differently with more information.
+
 ## Hints
 
 <details>

@@ -42,6 +42,18 @@ When your model is built, run the automatic checks from the repository root, in 
 
 When everything passes, compare your reasoning with the [reference solution](../../reference-solutions/task-01-revenue-reporting/SOLUTION.md). Try the task on your own first!
 
+## Before you submit
+
+Use this checklist to review your `SOLUTION.md` before you call the task done. The automatic checks test your SQL; these points cover the thinking that SQL can't show.
+
+- [ ] You state the grain of `fct_orders` in one sentence ("one row per …").
+- [ ] Your conceptual layer talks about business entities (customer, order, order line) without table or column names.
+- [ ] Your logical layer lists every output column with its type, its source, and the primary key.
+- [ ] You explain why `order_items` must be aggregated before it is joined to `orders`, and what would go wrong otherwise.
+- [ ] You explain your decision about cancelled orders: are they in the model, and how does someone get revenue without them?
+- [ ] You show how each required metric (order count, gross revenue, AOV, ARPU, status split) is calculated from `fct_orders` alone.
+- [ ] `checks.sql` passes.
+
 ## Hints
 
 <details>

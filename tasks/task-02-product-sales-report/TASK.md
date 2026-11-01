@@ -36,6 +36,18 @@ When your model is built, run the automatic checks from the repository root, in 
 
 When everything passes, compare your reasoning with the [reference solution](../../reference-solutions/task-02-product-sales-report/SOLUTION.md). Try the task on your own first!
 
+## Before you submit
+
+Use this checklist to review your `SOLUTION.md` before you call the task done. The automatic checks test your SQL; these points cover the thinking that SQL can't show.
+
+- [ ] You state the grain of the report and name the table that acts as the spine.
+- [ ] You explain why the join from `products` is a `LEFT JOIN`, and what an unsold product would look like in your output.
+- [ ] You show where the filter on cancelled orders is applied, and why it must happen before the aggregation (or in the join), not after.
+- [ ] You explain that `discount` is a rate and how you turned it into money.
+- [ ] You say which columns can be summed across products and which can't (`distinct_buyers`, `avg_revenue_per_order`).
+- [ ] You mention the limits of the data you rely on, for example that `stock` is a single snapshot.
+- [ ] `checks.sql` passes.
+
 ## Hints
 
 <details>

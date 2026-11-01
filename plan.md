@@ -235,7 +235,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Update the main README "Checking your work" section to point to `checks.sql` and `reference-solutions/`.
   - Note: Task 01 example validation queries 2–3 rebuild the model inline instead of querying `fct_orders`; simplify when moving it.
 
-- [ ] **Step 11 — Self-review rubric** in every `TASK.md`
+- [x] **Step 11 — Self-review rubric** in every `TASK.md` (done; task-specific "Before you submit" checklists, 6–8 items each, placed before the hints; Task 03 reference solution now states SCD type for every dimension to match its checklist)
   - "Before you submit" checklist (5–7 items): grain stated in one sentence, assumptions listed, trade-offs explained, validation performed, etc.
 
 - [ ] **Step 12 — Community setup**
