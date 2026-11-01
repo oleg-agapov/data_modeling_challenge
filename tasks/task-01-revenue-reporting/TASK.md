@@ -39,10 +39,10 @@ Hint 1. Required output columns
 
 | Column | Description |
 |---|---|
-| `order_id` | Primary key — unique identifier for the order (`orders.id`) |
+| `order_id` | Primary key — unique identifier for the order (`orders.order_id`) |
 | `user_id` | The customer who placed the order (`orders.user_id`) |
-| `date_ordered` | Timestamp of when the order was placed |
-| `status` | Order status: `pending`, `shipped`, `delivered`, or `cancelled` |
+| `order_date` | Timestamp of when the order was placed |
+| `order_status` | Order status: `pending`, `shipped`, `delivered`, or `cancelled` |
 | `payment_method` | Payment method used for the order |
 | `total_items` | Sum of `quantity` across all line items for this order |
 | `gross_revenue` | Sum of `line_total` across all line items for this order |
@@ -56,8 +56,8 @@ Hint 2. Additional guidance
 </summary>
 
 - Aggregate `order_items` to order grain first (e.g. a CTE or subquery), then join to `orders` to avoid row fan-out.
-- Join `orders` to `order_items` on `order_items.order_id = orders.id`.
+- Join `orders` to `order_items` on `order_items.order_id = orders.order_id`.
 - Aggregate `order_items` to order grain **before** (or within) the final join — the output must have exactly one row per `order_id`.
-- Retain **all** orders regardless of status; the `status` column allows consumers to filter or pivot as needed.
+- Retain **all** orders regardless of status; the `order_status` column allows consumers to filter or pivot as needed.
 
 </details>

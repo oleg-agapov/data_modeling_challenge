@@ -37,7 +37,7 @@ Produce one row per user with the following columns:
 | Column | Type | Description |
 |---|---|---|
 | `user_id` | UUID | User identifier |
-| `registered_at` | datetime | `users.created_on` |
+| `registered_at` | datetime | `users.created_at` |
 | `did_view_product` | boolean/int | User has at least one `page_view` event with a non-null `product_id` |
 | `did_add_to_cart` | boolean/int | User has at least one `add_to_cart` event |
 | `did_purchase` | boolean/int | User has at least one non-cancelled order in `orders` |

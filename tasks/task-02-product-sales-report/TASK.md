@@ -59,8 +59,8 @@ Hint 2. Additional guidance
 - In the current dataset `quantity` is always `1`, so `units_sold` and `times_ordered` will likely be equal — but model against the column definition, not the observed shortcut.
 - `avg_selling_price` should only be computed when `times_ordered > 0`; use `NULLIF(times_ordered, 0)` in the denominator to avoid division-by-zero.
 - Join `order_items` to `products` on `order_items.product_id = products.id`.
-- Join `order_items` to `orders` on `order_items.order_id = orders.id` to access order status and `user_id`.
-- **Exclude cancelled orders** (`orders.status = 'cancelled'`) from all sales metrics.
+- Join `order_items` to `orders` on `order_items.order_id = orders.order_id` to access order status and `user_id`.
+- **Exclude cancelled orders** (`orders.order_status = 'cancelled'`) from all sales metrics.
 - Include **all products** in the output, even those with zero sales — use a `LEFT JOIN` from `products` into the sales aggregation.
 - For products with no sales, numeric metric columns should be `0` (use `COALESCE`); `avg_selling_price` and `price_diff` should be `NULL`.
 

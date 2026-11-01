@@ -56,7 +56,7 @@ Hint 2. Dimension table specifications
 </summary>
 
 ### `dim_date`
-One row per calendar date covering the full range of `orders.date_ordered`.
+One row per calendar date covering the full range of `orders.order_date`.
 
 | Column | Type | Notes |
 |---|---|---|
@@ -77,12 +77,12 @@ One row per user; treat as a **Type 1 SCD** (overwrite on change, no history).
 | Column | Notes |
 |---|---|
 | `customer_key` | Integer surrogate key (auto-increment / row_number) |
-| `customer_id` | Natural key from `users.id` |
+| `customer_id` | Natural key from `users.user_id` |
 | `first_name` | |
 | `last_name` | |
 | `email` | |
-| `registered_at` | `users.created_on` |
-| `registration_month` | `DATE_TRUNC('month', created_on)` |
+| `registered_at` | `users.created_at` |
+| `registration_month` | `DATE_TRUNC('month', created_at)` |
 
 ### `dim_product`
 
@@ -100,11 +100,11 @@ One row per user; treat as a **Type 1 SCD** (overwrite on change, no history).
 | Column | Notes |
 |---|---|
 | `location_key` | Integer surrogate key |
-| `location_id` | Natural key from `locations.id` |
+| `location_id` | Natural key from `locations.location_id` |
 | `city` | |
-| `state` | `stateRegion` |
+| `state` | `state` |
 | `zip_code` | |
-| `country_code` | `code` |
+| `country_code` | `country_code` |
 
 </details>
 
@@ -121,14 +121,14 @@ Grain: one row per order line item.
 | Column | Type | Notes |
 |---|---|---|
 | `order_item_key` | integer | Surrogate PK |
-| `order_item_id` | UUID | Natural key from `order_items.id` |
+| `order_item_id` | UUID | Natural key from `order_items.order_item_id` |
 | `order_id` | UUID | Degenerate dimension (kept for drill-through) |
-| `order_status` | string | Denormalized from `orders.status` |
+| `order_status` | string | Denormalized from `orders.order_status` |
 | `payment_method` | string | Denormalized from `orders.payment_method` |
-| `date_key` | integer | FK → `dim_date.date_key` (from `orders.date_ordered`) |
+| `date_key` | integer | FK → `dim_date.date_key` (from `orders.order_date`) |
 | `customer_key` | integer | FK → `dim_customer.customer_key` |
 | `product_key` | integer | FK → `dim_product.product_key` |
-| `location_key` | integer | FK → `dim_location.location_key` (via `orders.user_id` → `users.loc_id`) |
+| `location_key` | integer | FK → `dim_location.location_key` (via `orders.user_id` → `users.location_id`) |
 | `quantity` | integer | |
 | `unit_price` | numeric(12,2) | Transaction price snapshot |
 | `discount` | numeric(12,2) | |

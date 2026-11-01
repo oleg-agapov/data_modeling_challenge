@@ -189,7 +189,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Optional: move task images into `assets/` everywhere for consistency.
   - Done when: a link checker finds no broken relative links.
 
-- [ ] **Step 4 — Column names in tasks, theory, example solution**
+- [x] **Step 4 — Column names in tasks, theory, example solution** (done; Task 01 output columns renamed to `order_date` / `order_status`; example solution verified in DuckDB: 1,918 rows, gross revenue 838,870.67)
   - Apply the mapping from 4.1 to every `TASK.md`, `THEORY.md`, `task-01/SOLUTION-example.md`.
   - Fix Task 01 theory: `users.payment_method` → `orders.payment_method`.
   - Done when: grep finds no old names (`date_ordered`, `created_on`, `loc_id`, `stateRegion`, `fullName`, `orders.id`, `users.id`, `order_items.id`, `locations.id`, bare `status` for orders).
@@ -232,6 +232,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - Fix output table names in each `TASK.md`: `fct_orders`, `rpt_product_sales`, `fct_order_items`, `dim_customer`, `dim_product`, `dim_date` (+ optional `dim_order_profile`).
   - New `tasks/task-0N-*/checks.sql` returning `check_name | PASS/FAIL` (grain, row counts, revenue reconciliation, NULL/orphan FKs, expected totals from the reference solution).
   - Done when: reference solutions pass all checks; an empty or wrong table fails them.
+  - Note: Task 01 example validation queries 2–3 rebuild the model inline instead of querying `fct_orders`; simplify when moving it.
 
 - [ ] **Step 11 — Self-review rubric** in every `TASK.md`
   - "Before you submit" checklist (5–7 items): grain stated in one sentence, assumptions listed, trade-offs explained, validation performed, etc.

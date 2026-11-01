@@ -50,7 +50,7 @@ GROUP BY p.id
 
 ## Aggregation Order: Pre-aggregate Before Joining
 
-A recurring trap: joining first, filtering second. When `order_items` is joined to `orders` to get `status`, you must apply the status filter **before** aggregating — or you will aggregate over all rows and then silently filter away some of the result.
+A recurring trap: joining first, filtering second. When `order_items` is joined to `orders` to get `order_status`, you must apply the status filter **before** aggregating — or you will aggregate over all rows and then silently filter away some of the result.
 
 The safe pattern is CTEs with explicit grain:
 
@@ -63,8 +63,8 @@ WITH product_sales AS (
         SUM(oi.quantity)             AS units_sold,
         SUM(oi.line_total)           AS total_revenue
     FROM order_items oi
-    JOIN orders o ON o.id = oi.order_id
-    WHERE o.status != 'cancelled'      -- filter BEFORE aggregation
+    JOIN orders o ON o.order_id = oi.order_id
+    WHERE o.order_status != 'cancelled'      -- filter BEFORE aggregation
     GROUP BY oi.product_id
 )
 -- Step 2: join the pre-aggregated CTE back to the spine

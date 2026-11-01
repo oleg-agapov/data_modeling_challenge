@@ -67,9 +67,9 @@ WITH user_event_flags AS (
     GROUP BY user_id
 )
 -- Step 2: join the aggregated CTE to the user spine
-SELECT u.id, uef.did_view_product, uef.did_add_to_cart
+SELECT u.user_id, uef.did_view_product, uef.did_add_to_cart
 FROM users u
-LEFT JOIN user_event_flags uef ON uef.user_id = u.id
+LEFT JOIN user_event_flags uef ON uef.user_id = u.user_id
 ```
 
 ---

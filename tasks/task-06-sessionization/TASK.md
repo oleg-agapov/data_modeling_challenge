@@ -47,7 +47,7 @@ Produce a flat table `enriched_events` with one row per event, combining event d
 | `page_url` | `user_events.page_url` | |
 | `user_id` | `user_events.user_id` | |
 | `user_email` | `users.email` | Denormalized |
-| `user_registered_at` | `users.created_on` | Denormalized |
+| `user_registered_at` | `users.created_at` | Denormalized |
 | `product_id` | `user_events.product_id` | Nullable |
 | `product_name` | `products.name` | Denormalized; `NULL` when no product |
 | `product_category` | `products.category` | Denormalized; `NULL` when no product |
