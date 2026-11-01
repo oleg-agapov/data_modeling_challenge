@@ -243,7 +243,7 @@ Each step = one commit. Owner is Claude unless marked **(author)**.
   - **(author)** Enable GitHub Discussions with "Show your solution" and "Q&A" categories.
   - Document the fork → fill `SOLUTION.md` → post link flow in the README (extend the existing "Feedback" section, which currently points to GitHub issues).
 
-- [ ] **Step 13 — Final pass**
+- [x] **Step 13 — Final pass** (done from a fresh clone of the pushed branch: CLI `setup.sql` row counts OK; reference solutions pass 8/10/12 checks via `.read`; every SQL block in all markdown files executed — 29 statements run, the rest are intentional fragments or use illustrative tables, which were verified with stand-in tables; 95 relative links OK; no missing or unreferenced images; balanced code fences and `<details>`; no stale names; titles and difficulty consistent across READMEs; every column used by `checks.sql` appears in the task hints; `challenge.duckdb` is git-ignored. Fixed: Task 04 Type 2 example was in a `sql` fence. **(author)** have one person do Task 01 cold before posting)
   - Fresh clone → `setup.sql` → reference solutions → `checks.sql` all pass; click every link.
   - **(author)** Ideally have one person do Task 01 cold before posting.
 

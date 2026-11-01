@@ -70,8 +70,9 @@ Each change creates a **new row** in the dimension, with a new surrogate key and
 
 **Use when:** You need to answer "what was the guest's country at the time of booking?" — not just "what is their country now?"
 
-```sql
--- Type 2 structure
+```text
+Type 2 structure
+
 guest_key | guest_id | country | valid_from | valid_to   | is_current
 ──────────┼──────────┼─────────┼────────────┼────────────┼───────────
 1001      | g-42     | DE      | 2022-01-01 | 2023-06-30 | FALSE
